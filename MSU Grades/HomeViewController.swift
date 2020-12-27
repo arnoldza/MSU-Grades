@@ -21,7 +21,8 @@ class HomeViewController: UIViewController, UISearchBarDelegate {
         self.classSearchBar.backgroundImage = UIImage()
         
         self.navigationItem.titleView = self.classSearchBar
-        
+        self.navigationController?.navigationBar.barTintColor = UIColor(red: 0.13, green: 0.36, blue: 0.31, alpha: 1.00)
+
         
         
         //Looks for single or multiple taps.
@@ -40,14 +41,17 @@ class HomeViewController: UIViewController, UISearchBarDelegate {
         self.classSearchBar.endEditing(true)
     }
     
+    
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
         self.classSearchBar.showsCancelButton = true
     }
     
+    
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         print("Searching...")
-        performSegue(withIdentifier: "ClassSegue", sender: nil)
+        performSegue(withIdentifier: "courseSegue", sender: nil)
     }
+    
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         print("Cancelling...")
