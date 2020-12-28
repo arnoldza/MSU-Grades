@@ -22,6 +22,8 @@
 		E8D697B62591C7A400415B66 /* ChartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8D697B52591C7A400415B66 /* ChartViewController.swift */; };
 		E8D697CF25986A3B00415B66 /* SectionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8D697CE25986A3B00415B66 /* SectionsViewController.swift */; };
 		E8D697D425986D6A00415B66 /* SectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8D697D325986D6A00415B66 /* SectionCell.swift */; };
+		E8D697DD2599020E00415B66 /* DatabaseHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8D697DC2599020E00415B66 /* DatabaseHandler.swift */; };
+		E8D697E2259902FD00415B66 /* ClassInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8D697E1259902FD00415B66 /* ClassInfo.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -69,6 +71,9 @@
 		E8D697B52591C7A400415B66 /* ChartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartViewController.swift; sourceTree = "<group>"; };
 		E8D697CE25986A3B00415B66 /* SectionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionsViewController.swift; sourceTree = "<group>"; };
 		E8D697D325986D6A00415B66 /* SectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionCell.swift; sourceTree = "<group>"; };
+		E8D697D8259901A900415B66 /* courses.sqlite */ = {isa = PBXFileReference; lastKnownFileType = file; path = courses.sqlite; sourceTree = "<group>"; };
+		E8D697DC2599020E00415B66 /* DatabaseHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseHandler.swift; sourceTree = "<group>"; };
+		E8D697E1259902FD00415B66 /* ClassInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClassInfo.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -151,6 +156,7 @@
 				E8D6977F2591957A00415B66 /* SceneDelegate.swift */,
 				E8D697812591957A00415B66 /* ViewController.swift */,
 				E8D697832591957A00415B66 /* Main.storyboard */,
+				E8D697D8259901A900415B66 /* courses.sqlite */,
 				E8D697862591957F00415B66 /* Assets.xcassets */,
 				E8D697882591957F00415B66 /* LaunchScreen.storyboard */,
 				E8D6978B2591957F00415B66 /* Info.plist */,
@@ -158,6 +164,8 @@
 				E8D697B52591C7A400415B66 /* ChartViewController.swift */,
 				E8D697CE25986A3B00415B66 /* SectionsViewController.swift */,
 				E8D697D325986D6A00415B66 /* SectionCell.swift */,
+				E8D697DC2599020E00415B66 /* DatabaseHandler.swift */,
+				E8D697E1259902FD00415B66 /* ClassInfo.swift */,
 			);
 			path = "MSU Grades";
 			sourceTree = "<group>";
@@ -421,10 +429,12 @@
 				E8D697822591957A00415B66 /* ViewController.swift in Sources */,
 				E8D6977E2591957A00415B66 /* AppDelegate.swift in Sources */,
 				E8D697D425986D6A00415B66 /* SectionCell.swift in Sources */,
+				E8D697DD2599020E00415B66 /* DatabaseHandler.swift in Sources */,
 				E8D697802591957A00415B66 /* SceneDelegate.swift in Sources */,
 				E8D697B12591A52600415B66 /* HomeViewController.swift in Sources */,
 				E8D697CF25986A3B00415B66 /* SectionsViewController.swift in Sources */,
 				E8D697B62591C7A400415B66 /* ChartViewController.swift in Sources */,
+				E8D697E2259902FD00415B66 /* ClassInfo.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
