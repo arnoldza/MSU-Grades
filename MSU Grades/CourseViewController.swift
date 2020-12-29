@@ -7,7 +7,7 @@
 
 import UIKit
 
-class SectionsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class CourseViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
     @IBOutlet weak var tableView: UITableView!
     override func viewDidLoad() {
@@ -32,7 +32,7 @@ class SectionsViewController: UIViewController, UITableViewDelegate, UITableView
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        performSegue(withIdentifier: "sectionSegue", sender: nil)
+        performSegue(withIdentifier: "chartSegue", sender: nil)
         tableView.deselectRow(at: indexPath, animated: true)
     }
 

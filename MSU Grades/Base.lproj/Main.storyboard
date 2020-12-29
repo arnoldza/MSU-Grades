@@ -35,6 +35,14 @@
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                 <textInputTraits key="textInputTraits"/>
                             </searchBar>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wko-Dl-OYT">
+                                <rect key="frame" x="140" y="744" width="111" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Instructor Demo"/>
+                                <connections>
+                                    <segue destination="eVE-hE-Rkq" kind="show" id="wIT-oM-fQH"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" red="0.13333332540000001" green="0.13333332540000001" blue="0.13333332540000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
@@ -43,17 +51,51 @@
                     <connections>
                         <outlet property="classSearchBar" destination="ot0-ib-Hu4" id="DNG-TT-EEg"/>
                         <outlet property="navigationItem" destination="bA7-10-EWc" id="dAN-0V-cdk"/>
-                        <segue destination="qOg-k4-xdr" kind="show" identifier="courseSegue" id="VPW-rA-Xv7"/>
+                        <segue destination="qOg-k4-xdr" kind="show" identifier="courseSegue" id="eEO-Ze-sR0"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="927.69230769230762" y="79.620853080568722"/>
         </scene>
-        <!--Sections View Controller-->
+        <!--Instructor View Controller-->
+        <scene sceneID="KBK-yc-tEn">
+            <objects>
+                <viewController storyboardIdentifier="InstructorViewController" id="eVE-hE-Rkq" customClass="InstructorViewController" customModule="MSU_Grades" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="nKy-Ix-CHS">
+                        <rect key="frame" x="0.0" y="0.0" width="390" height="844"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cNY-Bx-3oX">
+                                <rect key="frame" x="67" y="309" width="266" height="225"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Instructor Overview"/>
+                                <connections>
+                                    <segue destination="uSG-nU-tG9" kind="show" id="8WR-6a-bxF"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oUE-e9-7wN">
+                                <rect key="frame" x="159" y="751" width="83" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="DetailedInfo"/>
+                                <connections>
+                                    <action selector="onDetailedInfoButton:" destination="eVE-hE-Rkq" eventType="touchUpInside" id="mjq-ez-0Td"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="B9l-HF-2kX"/>
+                        <color key="backgroundColor" systemColor="systemPurpleColor"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="5Eb-gI-RGZ"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="9no-VW-i5K" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1868" y="583"/>
+        </scene>
+        <!--Course View Controller-->
         <scene sceneID="ARg-xX-JNn">
             <objects>
-                <viewController id="qOg-k4-xdr" customClass="SectionsViewController" customModule="MSU_Grades" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="CourseViewController" id="qOg-k4-xdr" customClass="CourseViewController" customModule="MSU_Grades" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="ThZ-bG-62f">
                         <rect key="frame" x="0.0" y="0.0" width="390" height="844"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -103,12 +145,54 @@
                     <navigationItem key="navigationItem" id="YFl-9X-jFg"/>
                     <connections>
                         <outlet property="tableView" destination="jqk-dl-TNa" id="5le-dr-Fnx"/>
-                        <segue destination="uSG-nU-tG9" kind="show" identifier="sectionSegue" id="YTm-bD-d6a"/>
+                        <segue destination="uSG-nU-tG9" kind="show" identifier="chartSegue" id="lga-Sv-rHY"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bnp-Cj-d2S" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1804.6153846153845" y="79.620853080568722"/>
+            <point key="canvasLocation" x="1868" y="-378"/>
+        </scene>
+        <!--Combined View Controller-->
+        <scene sceneID="BIC-ie-D8w">
+            <objects>
+                <viewController storyboardIdentifier="CombinedViewController" id="2CI-OJ-lBd" customClass="CombinedViewController" customModule="MSU_Grades" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="xux-Sl-kri">
+                        <rect key="frame" x="0.0" y="0.0" width="390" height="844"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MqQ-TY-1zV">
+                                <rect key="frame" x="96" y="298" width="198" height="247"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Detailed Info"/>
+                                <connections>
+                                    <segue destination="uSG-nU-tG9" kind="show" id="hYf-ob-wOZ"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="smb-gH-ill">
+                                <rect key="frame" x="167" y="708" width="57" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Courses"/>
+                                <connections>
+                                    <action selector="onCourseButton:" destination="2CI-OJ-lBd" eventType="touchUpInside" id="zyG-Bo-NFl"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fSO-No-oBu">
+                                <rect key="frame" x="162" y="759" width="67" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Instructor"/>
+                                <connections>
+                                    <action selector="onInstructorButton:" destination="2CI-OJ-lBd" eventType="touchUpInside" id="9kg-Ct-ps8"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="if6-mF-JfN"/>
+                        <color key="backgroundColor" systemColor="systemOrangeColor"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="qWC-k9-23w"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="aNK-De-hsa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2694" y="80"/>
         </scene>
         <!--Chart View Controller-->
         <scene sceneID="ORG-YX-gWm">
@@ -178,7 +262,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="AEU-EI-hVS" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2674" y="80"/>
+            <point key="canvasLocation" x="3711" y="80"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="T2b-Xz-tPO">
@@ -199,10 +283,19 @@
             <point key="canvasLocation" x="18.840579710144929" y="79.6875"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="lga-Sv-rHY"/>
+    </inferredMetricsTieBreakers>
     <resources>
         <image name="chart.bar.xaxis" catalog="system" width="128" height="98"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemOrangeColor">
+            <color red="1" green="0.58431372549019611" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemPurpleColor">
+            <color red="0.68627450980392157" green="0.32156862745098042" blue="0.87058823529411766" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

@@ -30,10 +30,10 @@ class ChartViewController: UIViewController, ChartViewDelegate {
                   "A+" : 0, "A" : 0, "A-" : 0, "B+" : 0, "B" : 0, "B-" : 0,
                   "C+" : 0, "C" : 0, "C-" : 0, "D+" : 0, "D" : 0, "D-" : 0,
                   "F" : 0,
-                  "incomplete" : 0, "withdrawn" : 0, "pass" : 0, "no_grade" : 0,
-                  "deferred" : 0, "unfinished_work" : 14, "visitor" : 0,
-                  "auditor" : 0, "extension" : 0, "conditional_pass" : 66,
-                  "no_grade_reported" : 23, "blank" : 0]
+                  "incomplete" : 0, "withdrawn" : 55, "pass" : 0, "no_grade" : 0,
+                  "deferred" : 0, "unfinished_work" : 0, "visitor" : 44,
+                  "auditor" : 15, "extension" : 2, "conditional_pass" : 66,
+                  "no_grade_reported" : 0, "blank" : 0]
     
     // Map of colors of each chart segment
     // White color implies no current entries
@@ -154,6 +154,7 @@ class ChartViewController: UIViewController, ChartViewDelegate {
         // Legend information
         self.barChart.legend.setCustom(entries: legendEntries)
         self.barChart.legend.xEntrySpace = 15
+        self.barChart.legend.yEntrySpace = 8
         self.barChart.legend.textColor = UIColor.white
         self.barChart.legend.form = .circle
         
@@ -204,6 +205,7 @@ class ChartViewController: UIViewController, ChartViewDelegate {
         // Legend information
         self.pieChart.legend.textColor = UIColor.white
         self.pieChart.legend.xEntrySpace = 15
+        self.pieChart.legend.yEntrySpace = 8
         self.pieChart.legend.form = .circle
         self.pieChart.legend.horizontalAlignment = .center
         
@@ -253,31 +255,35 @@ class ChartViewController: UIViewController, ChartViewDelegate {
             averageGrade = averageNum / Double(totalGrades)
             
             // Get median
-            var totalSeen = 0
-            for val in ["0.0", "1.0", "1.5", "2.0", "2.5", "3.0", "3.5", "4.0"] {
-                totalSeen += self.gpaMap[val]!
-                
-                if totalSeen > totalGrades / 2 {
-                    medianGrade = val
-                    break
-                }
-            }
+            let gpaScale = ["0.0", "1.0", "1.5", "2.0", "2.5", "3.0", "3.5", "4.0"]
+            medianGrade = self.getMedian(values: gpaScale, totalGrades: totalGrades)
             
-            if totalSeen == 0 {
-                // Get median letter grade if no regular median
-                for val in ["F", "D-", "D", "D+", "C-", "C", "C+", "B-", "B",
-                            "B+", "A-", "A", "A+"] {
-                    totalSeen += self.gpaMap[val]!
-                    
-                    if totalSeen > totalGrades / 2 {
-                        medianGrade = val
-                        break
-                    }
-                }
+            // Get median grade of alpha grades
+            if medianGrade == "" {
+                
+                let letterScale = ["F", "D-", "D", "D+", "C-", "C", "C+", "B-", "B",
+                                  "B+", "A-", "A", "A+"]
+                medianGrade = self.getMedian(values: letterScale, totalGrades: totalGrades)
+                
             }
         }
-    
+        // Bad input will return -1.0 for avg, "" for median, 0 for total
         return (average: averageGrade, median: medianGrade, total: totalStudents)
+    }
+    
+    
+    
+    func getMedian(values: [String], totalGrades: Int) -> String {
+        
+        var totalSeen = 0
+        for val in values {
+            totalSeen += self.gpaMap[val]!
+            
+            if totalSeen >= totalGrades / 2 {
+                return val
+            }
+        }
+        return ""
     }
     
 

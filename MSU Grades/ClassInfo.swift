@@ -13,7 +13,7 @@ struct ClassInfo {
     var subjectCode : String
     var courseCode : String
     var courseTitle : String
-    var instructors : String
+    var instructors : [String]
     var GradeInfo : [String : Int]
     
 }

@@ -27,7 +27,7 @@ func openDatabase() -> OpaquePointer? {
 let queryStatementString = "SELECT term_code, subject_code, course_code, course_title, instructors, \"4.0\", \"3.5\", \"3.0\", \"2.5\", \"2.0\", \"1.5\", \"1.0\". \"0.0\" FROM courses WHERE subject_code == \"CSE\" AND course_code == \"231\" ORDER BY ROWID;"
 
 
-func query(db: OpaquePointer, queryString: String) -> [ClassInfo] {
+func query(db: OpaquePointer, queryString: String) -> (byInstructor: [ClassInfo], bySemester: [ClassInfo]) {
     
     var queryStatement: OpaquePointer?
     // 1
@@ -39,17 +39,17 @@ func query(db: OpaquePointer, queryString: String) -> [ClassInfo] {
             
             guard let queryResultCol1 = sqlite3_column_text(queryStatement, 4) else {
                 print("Query result is nil")
-                return []
+                return ([], [])
             }
     
             guard let queryResultCol4 = sqlite3_column_text(queryStatement, 4) else {
                 print("Query result is nil")
-                return []
+                return ([], [])
             }
             
             guard let queryResultCol5 = sqlite3_column_text(queryStatement, 5) else {
                 print("Query result is nil")
-                return []
+                return ([], [])
             }
             
             let subjectCode = String(cString: queryResultCol4)
@@ -68,5 +68,5 @@ func query(db: OpaquePointer, queryString: String) -> [ClassInfo] {
     }
     // 7
     sqlite3_finalize(queryStatement)
-    return []
+    return ([], [])
 }
