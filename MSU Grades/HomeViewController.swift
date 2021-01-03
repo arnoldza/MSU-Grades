@@ -9,9 +9,8 @@ import UIKit
 
 class HomeViewController: UIViewController, UISearchBarDelegate {
 
-    
-
     @IBOutlet weak var classSearchBar: UISearchBar!
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -23,7 +22,6 @@ class HomeViewController: UIViewController, UISearchBarDelegate {
         self.navigationItem.titleView = self.classSearchBar
         self.navigationController?.navigationBar.barTintColor = UIColor(red: 0.13, green: 0.36, blue: 0.31, alpha: 1.00)
 
-        
         
         //Looks for single or multiple taps.
          let tap = UITapGestureRecognizer(target: self, action: #selector(UIInputViewController.dismissKeyboard))
@@ -48,30 +46,34 @@ class HomeViewController: UIViewController, UISearchBarDelegate {
     
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        print("Searching...")
         performSegue(withIdentifier: "courseSegue", sender: nil)
     }
     
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-        print("Cancelling...")
         self.classSearchBar.text = ""
         self.classSearchBar.showsCancelButton = false
         self.classSearchBar.endEditing(true)
     }
     
-    
-    
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+        
+        // if segue is to course page
+        if segue.identifier == "courseSegue" {
+            
+            // destination is course view controller
+            let vc = segue.destination as! CourseViewController
+            
+            // tokenize components
+            let components = self.classSearchBar.text!.components(separatedBy: " ")
+            
+            // pass the semesters to course view to put in table
+            if let semesters = query(queryString: "SELECT * FROM courses WHERE subject_code == \"\(components[0])\" AND course_code == \"\(components[1])\";") {
+                
+                vc.semesters = semesters
+                vc.courseName = components[0] + " " + components[1]
+            }
+        }
     }
-    */
 
 }

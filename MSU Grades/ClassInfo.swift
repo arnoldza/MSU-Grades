@@ -9,12 +9,12 @@ import Foundation
 
 struct ClassInfo {
     
-    var termCode : String
+    var term : String
     var subjectCode : String
     var courseCode : String
     var courseTitle : String
     var instructors : [String]
-    var GradeInfo : [String : Int]
+    var gradeInfo : [String : Int]
     
 }
 
