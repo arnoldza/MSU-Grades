@@ -96,7 +96,8 @@ func query(queryString: String) -> [ClassInfo]? {
                     let components = instructor.components(separatedBy: ",")
                     instructor = components[1] + " " + components[0]
                 }
-                instructors.append(instructor)
+                // Capitalize instructor name
+                instructors.append(instructor.capitalized)
             }
             
             // Get grade info
@@ -114,7 +115,8 @@ func query(queryString: String) -> [ClassInfo]? {
             // Append collected class info to all info
             allInfo.append(ClassInfo(term: termCode, subjectCode: subjectCode, courseCode: courseCode, courseTitle: courseTitle, instructors: instructors, gradeInfo: gradeData))
             
-            //print("\(termCode) ---- \(subjectCode) ---- \(courseCode) ---- \(instructors) ---- \(gradeData)")
+            // Comment out this line to see what classes were queried
+            // print("\(termCode) ---- \(subjectCode) ---- \(courseCode) ---- \(instructors) ---- \(gradeData)")
 
         }
         

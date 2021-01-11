@@ -12,6 +12,7 @@ class SemesterCell: UITableViewCell {
     @IBOutlet weak var semesterLabel: UILabel!
     @IBOutlet weak var averageLabel: UILabel!
     @IBOutlet weak var medianLabel: UILabel!
+    @IBOutlet weak var totalStudentsLabel: UILabel!
     
     // Grade info to pass to chart view
     var gradeData = (average: -1.0, median: "", total: 0)

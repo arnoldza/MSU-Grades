@@ -70,7 +70,12 @@ class HomeViewController: UIViewController, UISearchBarDelegate {
             // pass the semesters to course view to put in table
             if let semesters = query(queryString: "SELECT * FROM courses WHERE subject_code == \"\(components[0])\" AND course_code == \"\(components[1])\";") {
                 
-                vc.semesters = semesters
+                // filter out semesters and instructors from queried data
+                let filteredSemesters = filterBySemester(classData: semesters)
+                let filteredInstructors = filterByInstructor(classData: semesters)
+                
+                vc.semesters = filteredSemesters
+                vc.instructors = filteredInstructors
                 vc.courseName = components[0] + " " + components[1]
             }
         }
