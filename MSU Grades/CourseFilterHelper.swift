@@ -15,16 +15,27 @@ func filterBySemester(classData: [ClassInfo]) -> [ClassInfo] {
     // Array of filtered courses
     var filtered = [ClassInfo]()
     
+    // First course in array
+    let first = classData[0]
+
+    filtered.append(ClassInfo(term: "All Semesters", subjectCode: first.term, courseCode: first.term, courseTitle: first.courseTitle, instructors: nil, gradeInfo: first.gradeInfo))
+    
     // Look at each course in full queried class data
-    for course in classData {
+    for (i, course) in classData.enumerated() {
         
         // If this semester hasnt been seen yet
-        if filtered.count == 0 || filtered.last!.term != course.term {
+        if filtered.last!.term != course.term {
             filtered.append(ClassInfo(term: course.term, subjectCode: course.subjectCode, courseCode: course.courseCode, courseTitle: course.courseTitle, instructors: nil, gradeInfo: course.gradeInfo))
         } else {
             let prev = filtered[filtered.count - 1]
             filtered[filtered.count - 1] = ClassInfo(term: prev.term, subjectCode: prev.subjectCode, courseCode: prev.courseCode, courseTitle: prev.courseTitle, instructors: nil, gradeInfo: combineGradeInfo(first: prev, second: course))
         }
+        
+        // Get all semesters
+        if i != 0 {
+            filtered[0] = ClassInfo(term: "All Semesters", subjectCode: filtered[0].subjectCode, courseCode: filtered[0].courseCode, courseTitle: filtered[0].courseTitle, instructors: nil, gradeInfo: combineGradeInfo(first: filtered[0], second: course))
+        }
+        
     }
     
     // Each class in array has nil instructors
@@ -40,9 +51,13 @@ func filterByInstructor(classData: [ClassInfo]) -> [ClassInfo] {
     // Array of filtered courses
     var filtered = [ClassInfo]()
     
+    // First course in array
+    let first = classData[0]
+    
+    filtered.append(ClassInfo(term: first.term, subjectCode: first.subjectCode, courseCode: first.courseCode, courseTitle: first.courseTitle, instructors: ["All Instructors"], gradeInfo: first.gradeInfo))
     
     // Look at each course in full queried class data
-    for course in classData {
+    for (i, course) in classData.enumerated() {
         
         // Look at each instructor for the course
         for instructor in course.instructors! {
@@ -60,6 +75,11 @@ func filterByInstructor(classData: [ClassInfo]) -> [ClassInfo] {
                     filtered.append(ClassInfo(term: course.term, subjectCode: course.subjectCode, courseCode: course.courseCode, courseTitle: course.courseTitle, instructors: [instructor], gradeInfo: course.gradeInfo))
                 }
             }
+        }
+        
+        // Get all semesters
+        if i != 0 {
+            filtered[0] = ClassInfo(term: filtered[0].term, subjectCode: filtered[0].subjectCode, courseCode: filtered[0].courseCode, courseTitle: filtered[0].courseTitle, instructors: ["All Instructors"], gradeInfo: combineGradeInfo(first: filtered[0], second: course))
         }
     }
     

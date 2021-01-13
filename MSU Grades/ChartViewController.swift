@@ -59,8 +59,8 @@ class ChartViewController: UIViewController, ChartViewDelegate {
         }
         
         // Set frames of charts
-        barChart.frame = CGRect(x: 0, y: 0, width: self.view.frame.size.width, height: self.view.frame.size.width)
-        pieChart.frame = CGRect(x: 0, y: 0, width: self.view.frame.size.width, height: self.view.frame.size.width)
+        self.barChart.frame = CGRect(x: 0, y: 0, width: self.view.frame.size.width, height: self.view.frame.size.width)
+        self.pieChart.frame = CGRect(x: 0, y: 0, width: self.view.frame.size.width, height: self.view.frame.size.width)
         
         // Set centers of charts
         barChart.center = CGPoint(x: view.center.x, y: view.center.y + view.frame.size.height / 16)
@@ -214,7 +214,14 @@ class ChartViewController: UIViewController, ChartViewDelegate {
     
     
     @IBAction func onDetailedInfoButton(_ sender: Any) {
-        print("Touched!!")
+        // Move to combined view controller
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let newVc = storyboard.instantiateViewController(withIdentifier: "CombinedViewController")
+        var vcArray = self.navigationController?.viewControllers
+        vcArray!.removeLast()
+        vcArray!.removeLast()
+        vcArray!.append(newVc)
+        self.navigationController?.setViewControllers(vcArray!, animated: true)
     }
     
 }

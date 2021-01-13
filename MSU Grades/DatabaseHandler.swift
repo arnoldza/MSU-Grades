@@ -20,6 +20,7 @@ let gradeOrder = ["4.0", "3.5", "3.0", "2.5", "2.0", "1.5", "1.0", "0.0",
                     "auditor", "extension",
                     "conditional_pass", "no_grade_reported", "blank"]
 
+
 // Opens database
 func openDatabase() -> OpaquePointer? {
 
@@ -36,9 +37,98 @@ func openDatabase() -> OpaquePointer? {
 }
 
 
+func querySearchSuggestions(queryCoursesString: String, queryInstructorsString: String) -> [String]? {
+    
+    let db = openDatabase()
+    var suggestions = [String]()
+    var queryStatement: OpaquePointer?
+    
+    // Prepare query
+    if sqlite3_prepare_v2(db, queryCoursesString, -1, &queryStatement, nil) ==
+        SQLITE_OK {
+        
+        // while results are still being returned by db query
+        while sqlite3_step(queryStatement) == SQLITE_ROW {
+            
+            // Collect info from database columns
+            guard let queryResultCol0 = sqlite3_column_text(queryStatement, 0) else {
+                print("Query col 0 is nil")
+                return nil
+            }
+            guard let queryResultCol1 = sqlite3_column_text(queryStatement, 1) else {
+                print("Query col 1 is nil")
+                return nil
+            }
+            guard let queryResultCol2 = sqlite3_column_text(queryStatement, 2) else {
+                print("Query col 2 is nil")
+                return nil
+            }
+            
+            // subject & course codes, title
+            let subjectCode = String(cString: queryResultCol0)
+            let courseCode = String(cString: queryResultCol1)
+            let courseTitle = String(cString: queryResultCol2)
+            
+            let fullClass = subjectCode + " " + courseCode + " - " + courseTitle
+            
+            suggestions.append(fullClass)
+        }
+        
+        
+    } else {
+        // if query is not preparable
+        let errorMessage = String(cString: sqlite3_errmsg(db))
+        print("\nQuery is not prepared -- \(errorMessage)")
+    }
+    
+    // Prepare query
+    if sqlite3_prepare_v2(db, queryInstructorsString, -1, &queryStatement, nil) ==
+        SQLITE_OK {
+        
+        // Use this hash-set to keep track of instructors added into suggestions
+        var instructorsSet = Set<String>()
+        
+        // while results are still being returned by db query
+        while sqlite3_step(queryStatement) == SQLITE_ROW {
+            
+            // Collect info from database columns
+            guard let queryResultCol0 = sqlite3_column_text(queryStatement, 0) else {
+                print("Query col 0 is nil")
+                return nil
+            }
+            
+            // Instructors
+            let instructorsRaw = String(cString: queryResultCol0)
+            let instructors = extractInstructors(rawQueryResult: instructorsRaw)
+            
+            for instructor in instructors {
+                if !(instructorsSet.contains(instructor)) {
+                    suggestions.append(instructor)
+                    instructorsSet.insert(instructor)
+                }
+            }
+            
+        }
+        
+        
+    } else {
+        // if query is not preparable
+        let errorMessage = String(cString: sqlite3_errmsg(db))
+        print("\nQuery is not prepared -- \(errorMessage)")
+    }
+    
+    // finalize query statement and close db
+    sqlite3_finalize(queryStatement)
+    sqlite3_close(db)
+    
+    //print(suggestions.count)
+    return suggestions
+}
+
+
 // query function assumes SELECT * (all columns)
 // returns nil on error
-func query(queryString: String) -> [ClassInfo]? {
+func queryClasses(queryString: String) -> [ClassInfo]? {
     
     let db = openDatabase()
     var allInfo = [ClassInfo]()
@@ -85,20 +175,7 @@ func query(queryString: String) -> [ClassInfo]? {
             
             // Instructors
             let instructorsRaw = String(cString: queryResultCol5)
-            let instructorsRawArray = instructorsRaw.split(separator: "|")
-            var instructors = [String]()
-            
-            // Insert each instructor into array
-            for prof in instructorsRawArray {
-                var instructor = prof.trimmingCharacters(in: .whitespacesAndNewlines)
-                // Convert to standard non-comma formatting if needed
-                if instructor.contains(",") {
-                    let components = instructor.components(separatedBy: ",")
-                    instructor = components[1] + " " + components[0]
-                }
-                // Capitalize instructor name
-                instructors.append(instructor.capitalized)
-            }
+            let instructors = extractInstructors(rawQueryResult: instructorsRaw)
             
             // Get grade info
             var gradeData = [String : Int]()
@@ -130,4 +207,27 @@ func query(queryString: String) -> [ClassInfo]? {
     sqlite3_finalize(queryStatement)
     sqlite3_close(db)
     return allInfo
+}
+
+
+// Takes raw query results and tokenizes into an array
+func extractInstructors(rawQueryResult: String) -> [String] {
+    
+    let instructorsRawArray = rawQueryResult.split(separator: "|")
+    var instructors = [String]()
+    
+    // Insert each instructor into array
+    for prof in instructorsRawArray {
+        var instructor = prof.trimmingCharacters(in: .whitespacesAndNewlines)
+        // Convert to standard non-comma formatting if needed
+        if instructor.contains(",") {
+            let components = instructor.components(separatedBy: ",")
+            instructor = components[1] + " " + components[0]
+        }
+        // Capitalize instructor name
+        instructors.append(instructor.capitalized)
+    }
+    
+    return instructors
+    
 }
