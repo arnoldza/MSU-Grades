@@ -63,8 +63,8 @@ class ChartViewController: UIViewController, ChartViewDelegate {
         self.pieChart.frame = CGRect(x: 0, y: 0, width: self.view.frame.size.width, height: self.view.frame.size.width)
         
         // Set centers of charts
-        barChart.center = CGPoint(x: view.center.x, y: view.center.y + view.frame.size.height / 16)
-        pieChart.center = CGPoint(x: view.center.x, y: view.center.y + view.frame.size.height / 16)
+        barChart.center = CGPoint(x: view.center.x, y: view.center.y + view.frame.size.height * (5/64))
+        pieChart.center = CGPoint(x: view.center.x, y: view.center.y + view.frame.size.height * (5/64))
         
         view.addSubview(barChart)
         view.addSubview(pieChart)
@@ -129,6 +129,7 @@ class ChartViewController: UIViewController, ChartViewDelegate {
         }
         
         chartData.colors = chartColors
+        chartData.valueFont = UIFont.systemFont(ofSize: 10)
         
         // Legend information
         self.barChart.legend.setCustom(entries: legendEntries)
