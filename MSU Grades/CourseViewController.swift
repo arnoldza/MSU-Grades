@@ -62,9 +62,13 @@ class CourseViewController: UIViewController, UITableViewDelegate, UITableViewDa
         // use instructor cell in table view
         if self.instructorView {
             
-            let cell = tableView.dequeueReusableCell(withIdentifier: "InstructorCell") as! InstructorCell
+            let cell = self.tableView.dequeueReusableCell(withIdentifier: "InstructorCell") as! InstructorCell
             
-            cell.backgroundColor = UIColor(white: 0.15, alpha: 1.0)
+            if indexPath.row % 2 == 0 {
+                cell.backgroundColor = UIColor(white: 0.2, alpha: 1.0)
+            } else {
+                cell.backgroundColor = UIColor(white: 0.25, alpha: 1.0)
+            }
             
             // get data to display on cell
             let instructor = self.instructors[indexPath.row]
@@ -74,8 +78,17 @@ class CourseViewController: UIViewController, UITableViewDelegate, UITableViewDa
             
             // edit attributes of cell to display or hold onto
             cell.instructorNameLabel.text = name
-            cell.averageLabel.text = "Average Grade = " + String(format: "%.3f", data.average)
-            cell.medianLabel.text = "MedianGrade = " + data.median
+            
+            if data.average >= 0 {
+                cell.averageLabel.text = "Average Grade = " + String(format: "%.3f", data.average)
+            } else {
+                cell.averageLabel.text = "Average Grade = N/A"
+            }
+            if data.median != "" {
+                cell.medianLabel.text = "Median Grade = " + data.median
+            } else {
+                cell.medianLabel.text = "Median Grade = N/A"
+            }
             cell.totalStudentsLabel.text = String(data.total) + " total students"
             cell.latestDataLabel.text = "Latest Data: " + latestTerm
             cell.gradeData = data
@@ -85,21 +98,9 @@ class CourseViewController: UIViewController, UITableViewDelegate, UITableViewDa
         // use semester cell in table view
         } else {
             
-            let cell = tableView.dequeueReusableCell(withIdentifier: "SemesterCell") as! SemesterCell
+            let cell = self.tableView.dequeueReusableCell(withIdentifier: "SemesterCell") as! SemesterCell
             
-            cell.backgroundColor = UIColor(white: 0.15, alpha: 1.0)
-            
-            // get data to display on cell
-            let semester = self.semesters[indexPath.row]
-            let data = getGradeData(gpaMap: semester.gradeInfo)
-            let term = semester.term
-            
-            // edit attributes of cell to display or hold onto
-            cell.semesterLabel.text = term
-            cell.averageLabel.text = "Average Grade = " + String(format: "%.3f", data.average)
-            cell.medianLabel.text = "MedianGrade = " + data.median
-            cell.totalStudentsLabel.text = String(data.total) + " total students"
-            cell.gradeData = data
+            setupSemesterCell(cell: cell, semesters: self.semesters, row: indexPath.row)
             
             return cell
         }
@@ -131,12 +132,21 @@ class CourseViewController: UIViewController, UITableViewDelegate, UITableViewDa
                 // Send instructor cell info if instructor view
                 if self.instructorView {
                     let cell = self.tableView.cellForRow(at: indexPath) as! InstructorCell
-                    vc.chartTitle = self.instructors[selectedRow].instructors![0]
+                    let instructor = self.instructors[selectedRow].instructors![0]
+                    
+                    vc.chartTitle = instructor
                     vc.average = cell.gradeData.average
                     vc.median = cell.gradeData.median
                     vc.total = cell.gradeData.total
                     vc.gpaMap = self.instructors[selectedRow].gradeInfo
-                    vc.detailedInfoButtonHide = false
+                    
+                    // Hide detailed info button if looking at all instructors
+                    if instructor == "All Instructors" {
+                        vc.detailedInfoButtonHide = true
+                    } else {
+                        vc.detailedInfoButtonHide = false
+                    }
+                    
                 // Send semester cell info otherwise
                 } else {
                     let cell = self.tableView.cellForRow(at: indexPath) as! SemesterCell

@@ -70,8 +70,16 @@ class ChartViewController: UIViewController, ChartViewDelegate {
         view.addSubview(pieChart)
         
         // Set values of grade data labels
-        averageGradeLabel.text = "Average Grade = " + String(format: "%.3f", self.average)
-        medianGradeLabel.text = "Median Grade = " + self.median
+        if self.average >= 0 {
+            averageGradeLabel.text = "Average Grade = " + String(format: "%.3f", self.average)
+        } else {
+            averageGradeLabel.text = ""
+        }
+        if self.median != "" {
+            medianGradeLabel.text = "Median Grade = " + self.median
+        } else {
+            medianGradeLabel.text = ""
+        }
         totalGradesLabel.text = String(self.total) + " total students"
         
         
@@ -215,9 +223,29 @@ class ChartViewController: UIViewController, ChartViewDelegate {
     
     
     @IBAction func onDetailedInfoButton(_ sender: Any) {
+        
         // Move to combined view controller
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let newVc = storyboard.instantiateViewController(withIdentifier: "CombinedViewController")
+        let newVc = storyboard.instantiateViewController(withIdentifier: "CombinedViewController") as! CombinedViewController
+        
+        // Get query components
+        let instructor = self.chartTitle
+        let instructorSecondary = instructorComma(original: instructor)
+        let courseName = self.boldedTitle
+        let courseComponents = courseName.components(separatedBy: " ")
+        
+        // Query for instances of both the course and instructor that taught
+        if let semesters = queryClasses(queryString: "SELECT * FROM courses WHERE subject_code == \"\(courseComponents[0])\" AND course_code == \"\(courseComponents[1])\" AND (instructors LIKE \"%\(instructor)%\" OR instructors LIKE \"%\(instructorSecondary)%\");") {
+            
+            // filter by semester and return
+            let filtered = filterBySemester(classData: semesters)
+            newVc.semesters = filtered
+        }
+        
+        // Set attributes of new view controller
+        newVc.courseName = courseName
+        newVc.instructorName = instructor
+        
         var vcArray = self.navigationController?.viewControllers
         vcArray!.removeLast()
         vcArray!.removeLast()

@@ -67,7 +67,6 @@ func filterByInstructor(classData: [ClassInfo]) -> [ClassInfo] {
                 
                 // Finds first ClassInfo in filtered with instructor
                 if let index = filtered.firstIndex(where: { $0.instructors![0] == instructor }) {
-                    print("Found!")
                     let prev = filtered[index]
                     filtered[index] = ClassInfo(term: prev.term, subjectCode: prev.subjectCode, courseCode: prev.courseCode, courseTitle: prev.courseTitle, instructors: prev.instructors, gradeInfo: combineGradeInfo(first: prev, second: course))
                 // If wasnt found

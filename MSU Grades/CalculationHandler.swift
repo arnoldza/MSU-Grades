@@ -40,14 +40,14 @@ func getGradeData(gpaMap : [String : Int]) ->
         averageGrade = averageNum / Double(totalGrades)
         
         // Get median
-        let gpaScale = ["0.0", "1.0", "1.5", "2.0", "2.5", "3.0", "3.5", "4.0"]
+        let gpaScale = ["4.0", "3.5", "3.0", "2.5", "2.0", "1.5", "1.0", "0.0"]
+        
         medianGrade = getMedian(gpaMap: gpaMap, values: gpaScale, totalGrades: totalGrades)
         
         // Get median grade of alpha grades
         if medianGrade == "" {
             
-            let letterScale = ["F", "D-", "D", "D+", "C-", "C", "C+", "B-", "B",
-                              "B+", "A-", "A", "A+"]
+            let letterScale = ["A+", "A", "A-", "B+", "B", "B-", "C+", "C", "C-", "D+", "D", "D-", "F"]
             medianGrade = getMedian(gpaMap: gpaMap, values: letterScale, totalGrades: totalGrades)
             
         }
@@ -64,7 +64,7 @@ func getMedian(gpaMap: [String: Int], values: [String], totalGrades: Int) -> Str
     for val in values {
         totalSeen += gpaMap[val]!
         
-        if totalSeen > totalGrades / 2 {
+        if totalSeen >= Int(totalGrades / 2) {
             return val
         }
     }

@@ -231,3 +231,17 @@ func extractInstructors(rawQueryResult: String) -> [String] {
     return instructors
     
 }
+
+
+// Takes regular instructor name formatting and converts into secondary DB formatting
+func instructorComma(original: String) -> String {
+    
+    let instructorComponents = original.components(separatedBy: " ")
+    var instructorComma = instructorComponents[instructorComponents.count - 1] + ","
+    for i in 0...instructorComponents.count - 2 {
+        instructorComma += instructorComponents[i] + " "
+    }
+    instructorComma = String(instructorComma.dropLast())
+    
+    return instructorComma
+}

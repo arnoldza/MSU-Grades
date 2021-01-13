@@ -83,9 +83,6 @@
                         <color key="backgroundColor" systemColor="systemPurpleColor"/>
                     </view>
                     <navigationItem key="navigationItem" id="5Eb-gI-RGZ"/>
-                    <connections>
-                        <segue destination="SBU-yg-6YZ" kind="show" id="nYX-Pj-6AP"/>
-                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9no-VW-i5K" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -162,7 +159,6 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
-                                            <color key="backgroundColor" red="0.15686270590000001" green="0.15686273570000001" blue="0.15686270590000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                             <color key="tintColor" red="0.90196078431372551" green="0.44705882352941173" blue="0.43529411764705883" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                         </tableViewCellContentView>
                                         <connections>
@@ -215,7 +211,6 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
-                                            <color key="backgroundColor" red="0.15686270590000001" green="0.15686273570000001" blue="0.15686270590000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                         </tableViewCellContentView>
                                         <connections>
                                             <outlet property="averageLabel" destination="Qjz-L6-2ik" id="JPU-g4-XWs"/>
@@ -232,7 +227,7 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="breakdown by Instructor"/>
                                 <connections>
-                                    <action selector="onBreakdownButton:" destination="qOg-k4-xdr" eventType="touchUpInside" id="fQR-bG-WzH"/>
+                                    <action selector="onBreakdownButton:" destination="qOg-k4-xdr" eventType="touchUpInside" id="sYH-WO-GF6"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -243,12 +238,11 @@
                         <nil key="title"/>
                     </navigationItem>
                     <connections>
-                        <outlet property="breakdownButton" destination="bzf-ag-hBF" id="cOJ-UV-eBX"/>
+                        <outlet property="breakdownButton" destination="bzf-ag-hBF" id="V1C-gH-ouo"/>
                         <outlet property="courseDescriptionLabel" destination="GYg-et-MUO" id="mOd-Pz-VHf"/>
                         <outlet property="courseTitleLabel" destination="Wyr-21-pSp" id="34W-Gq-172"/>
                         <outlet property="tableView" destination="jqk-dl-TNa" id="5le-dr-Fnx"/>
                         <segue destination="uSG-nU-tG9" kind="show" identifier="chartSegue" id="lga-Sv-rHY"/>
-                        <segue destination="SBU-yg-6YZ" kind="show" id="MYy-LP-xLm"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bnp-Cj-d2S" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -258,7 +252,7 @@
         <!--Chart View Controller-->
         <scene sceneID="ORG-YX-gWm">
             <objects>
-                <viewController id="uSG-nU-tG9" customClass="ChartViewController" customModule="MSU_Grades" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController modalPresentationStyle="fullScreen" id="uSG-nU-tG9" customClass="ChartViewController" customModule="MSU_Grades" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="MdG-Rr-qC0">
                         <rect key="frame" x="0.0" y="0.0" width="390" height="844"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -307,7 +301,7 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="See detailed grade info"/>
                                 <connections>
-                                    <action selector="onDetailedInfoButton:" destination="uSG-nU-tG9" eventType="touchUpInside" id="wG7-If-YyN"/>
+                                    <action selector="onDetailedInfoButton:" destination="uSG-nU-tG9" eventType="touchUpInside" id="o48-dx-au3"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -318,7 +312,7 @@
                     <connections>
                         <outlet property="averageGradeLabel" destination="fMO-fR-giE" id="86H-OW-7Ks"/>
                         <outlet property="chartControl" destination="dXQ-3U-LCR" id="17D-Fo-yU4"/>
-                        <outlet property="detailedInfoButton" destination="o1c-I2-FLR" id="qgQ-eR-p1S"/>
+                        <outlet property="detailedInfoButton" destination="o1c-I2-FLR" id="lbr-99-tJf"/>
                         <outlet property="medianGradeLabel" destination="PFE-7L-hIS" id="H9c-Oa-18q"/>
                         <outlet property="titleLabel" destination="4Ue-pi-3UT" id="gL0-hc-s7q"/>
                         <outlet property="totalGradesLabel" destination="7SU-ui-kCk" id="QZh-Mo-iRY"/>
@@ -360,7 +354,7 @@
                                 <attributedString key="attributedText">
                                     <fragment content="AFRE 493A / Bathmage Sandun Indeewa Perera - Overview">
                                         <attributes>
-                                            <color key="NSColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="NSColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <font key="NSFont" size="32" name="MuktaMahee-Bold"/>
                                             <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" lineHeightMultiple="0.75" tighteningFactorForTruncation="0.0"/>
                                         </attributes>
@@ -410,7 +404,6 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
-                                            <color key="backgroundColor" red="0.15686270590000001" green="0.15686273570000001" blue="0.15686270590000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                             <color key="tintColor" red="0.90196078430000004" green="0.44705882349999998" blue="0.43529411759999997" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                         </tableViewCellContentView>
                                         <connections>
@@ -423,19 +416,19 @@
                                 </prototypes>
                             </tableView>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8qe-1T-Vtp">
-                                <rect key="frame" x="206" y="214" width="168" height="30"/>
+                                <rect key="frame" x="206" y="217" width="168" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Instructor overview"/>
                                 <connections>
-                                    <action selector="onBreakdownButton:" destination="SBU-yg-6YZ" eventType="touchUpInside" id="gtN-gu-978"/>
+                                    <action selector="onInstructorOverview:" destination="SBU-yg-6YZ" eventType="touchUpInside" id="hfw-Rq-tAB"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Hcc-em-ACz">
-                                <rect key="frame" x="16" y="214" width="182" height="30"/>
+                                <rect key="frame" x="0.0" y="217" width="182" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Class overview"/>
                                 <connections>
-                                    <action selector="onBreakdownButton:" destination="SBU-yg-6YZ" eventType="touchUpInside" id="Qzf-VV-GgC"/>
+                                    <action selector="onClassOverview:" destination="SBU-yg-6YZ" eventType="touchUpInside" id="8or-gX-acU"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -446,19 +439,18 @@
                         <nil key="title"/>
                     </navigationItem>
                     <connections>
-                        <outlet property="breakdownButton" destination="8qe-1T-Vtp" id="QPG-4k-BLm"/>
-                        <outlet property="courseTitleLabel" destination="STz-7C-xZn" id="t8f-ry-W7f"/>
-                        <outlet property="tableView" destination="auG-pn-GxO" id="oz9-d1-z6z"/>
+                        <outlet property="combinedTitleLabel" destination="STz-7C-xZn" id="wko-Fu-r0U"/>
+                        <outlet property="tableView" destination="auG-pn-GxO" id="css-rZ-UJk"/>
+                        <segue destination="uSG-nU-tG9" kind="show" identifier="chartSegue" id="wd0-bz-vPh"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ebx-92-uaz" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2749.2307692307691" y="79.620853080568722"/>
+            <point key="canvasLocation" x="2740" y="92"/>
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="MYy-LP-xLm"/>
-        <segue reference="lga-Sv-rHY"/>
+        <segue reference="wd0-bz-vPh"/>
     </inferredMetricsTieBreakers>
     <resources>
         <systemColor name="systemBackgroundColor">
