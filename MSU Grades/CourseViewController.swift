@@ -32,6 +32,7 @@ class CourseViewController: UIViewController, UITableViewDelegate, UITableViewDa
         self.tableView.delegate = self
         self.tableView.dataSource = self
         
+        // Bottom of screen same color as background
         self.tableView.backgroundColor = view.backgroundColor
         
         self.courseTitleLabel.text = self.courseName + " - Overview"

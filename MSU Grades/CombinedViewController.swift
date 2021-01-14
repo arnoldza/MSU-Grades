@@ -84,11 +84,62 @@ class CombinedViewController: UIViewController, UITableViewDelegate, UITableView
     }
     
 
+    // Send to class overview
     @IBAction func onClassOverview(_ sender: Any) {
         
+        // Move to course view controller
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let newVc = storyboard.instantiateViewController(withIdentifier: "CourseViewController") as! CourseViewController
+        
+        // tokenize components
+        let components = self.courseName.components(separatedBy: " ")
+        
+        // Query for instances of the class
+        if let semesters = queryClasses(queryString: "SELECT * FROM courses WHERE subject_code == \"\(components[0])\" AND course_code == \"\(components[1])\";") {
+            
+            // filter by semester and instructors
+            let filteredSemesters = filterBySemester(classData: semesters)
+            let filteredInstructors = filterByInstructor(classData: semesters)
+            newVc.semesters = filteredSemesters
+            newVc.instructors = filteredInstructors
+            
+        }
+        
+        newVc.courseName = self.courseName
+        
+        var vcArray = self.navigationController?.viewControllers
+        vcArray!.removeLast()
+        vcArray!.append(newVc)
+        self.navigationController?.setViewControllers(vcArray!, animated: true)
     }
     
     
+    // Send to instructor overview
     @IBAction func onInstructorOverview(_ sender: Any) {
+        
+        // Move to instructor view controller
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let newVc = storyboard.instantiateViewController(withIdentifier: "InstructorViewController") as! InstructorViewController
+        
+        let instructor = self.instructorName
+        let instructorSecondary = instructorComma(original: instructor)
+        
+        // Query for instances of the instructor
+        if let semesters = queryClasses(queryString: "SELECT * FROM courses WHERE instructors LIKE \"%\(instructor)%\" OR instructors LIKE \"%\(instructorSecondary)%\";") {
+            
+            // filter out semesters and courses from queried data
+            let filteredSemesters = filterBySemester(classData: semesters)
+            let filteredCourses = filterByCourse(classData: semesters)
+            
+            newVc.semesters = filteredSemesters
+            newVc.courses = filteredCourses
+        }
+        
+        newVc.instructorName = instructor
+        
+        var vcArray = self.navigationController?.viewControllers
+        vcArray!.removeLast()
+        vcArray!.append(newVc)
+        self.navigationController?.setViewControllers(vcArray!, animated: true)
     }
 }

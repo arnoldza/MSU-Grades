@@ -145,6 +145,8 @@ class HomeViewController: UIViewController, UITextFieldDelegate, ChartViewDelega
             // Assumes instructor names do not have digits
             if item.title.rangeOfCharacter(from: .decimalDigits) != nil {
                 self.performSegue(withIdentifier: "courseSegue", sender: nil)
+            } else {
+                self.performSegue(withIdentifier: "instructorSegue", sender: nil)
             }
             
             self.classSearchBar.text = ""
@@ -176,8 +178,30 @@ class HomeViewController: UIViewController, UITextFieldDelegate, ChartViewDelega
                 
                 vc.semesters = filteredSemesters
                 vc.instructors = filteredInstructors
-                vc.courseName = components[0] + " " + components[1]
             }
+            
+            vc.courseName = components[0] + " " + components[1]
+            
+        } else if segue.identifier == "instructorSegue" {
+            
+            // destination is instructor view controller
+            let vc = segue.destination as! InstructorViewController
+            
+            let instructor = self.classSearchBar.text!
+            
+            let instructorSecondary = instructorComma(original: instructor)
+            
+            if let semesters = queryClasses(queryString: "SELECT * FROM courses WHERE instructors LIKE \"%\(instructor)%\" OR instructors LIKE \"%\(instructorSecondary)%\";") {
+                
+                // filter out semesters and courses from queried data
+                let filteredSemesters = filterBySemester(classData: semesters)
+                let filteredCourses = filterByCourse(classData: semesters)
+                
+                vc.semesters = filteredSemesters
+                vc.courses = filteredCourses
+            }
+            
+            vc.instructorName = instructor
         }
     }
 

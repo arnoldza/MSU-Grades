@@ -1,15 +1,15 @@
 //
-//  InstructorCell.swift
+//  CourseCell.swift
 //  MSU Grades
 //
-//  Created by Zach Arnold on 1/9/21.
+//  Created by Zach Arnold on 1/13/21.
 //
 
 import UIKit
 
-class InstructorCell: UITableViewCell {
-
-    @IBOutlet weak var instructorNameLabel: UILabel!
+class CourseCell: UITableViewCell {
+    
+    @IBOutlet weak var courseTitleLabel: UILabel!
     @IBOutlet weak var averageLabel: UILabel!
     @IBOutlet weak var medianLabel: UILabel!
     @IBOutlet weak var totalStudentsLabel: UILabel!
@@ -17,8 +17,7 @@ class InstructorCell: UITableViewCell {
     
     // Grade info to pass to chart view
     var gradeData = (average: -1.0, median: "", total: 0)
-    
-    
+
     override func awakeFromNib() {
         super.awakeFromNib()
         

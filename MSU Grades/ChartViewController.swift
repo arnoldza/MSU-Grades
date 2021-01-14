@@ -222,16 +222,27 @@ class ChartViewController: UIViewController, ChartViewDelegate {
     }
     
     
+    // Send user to combined table view
     @IBAction func onDetailedInfoButton(_ sender: Any) {
         
         // Move to combined view controller
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let newVc = storyboard.instantiateViewController(withIdentifier: "CombinedViewController") as! CombinedViewController
         
+        var instructor : String
+        var courseName : String
+        
+        // If we're in course chart view
+        if self.boldedTitle.rangeOfCharacter(from: .decimalDigits) != nil {
+            instructor = self.chartTitle
+            courseName = self.boldedTitle
+        } else {
+            courseName = self.chartTitle
+            instructor = self.boldedTitle
+        }
+        
         // Get query components
-        let instructor = self.chartTitle
         let instructorSecondary = instructorComma(original: instructor)
-        let courseName = self.boldedTitle
         let courseComponents = courseName.components(separatedBy: " ")
         
         // Query for instances of both the course and instructor that taught

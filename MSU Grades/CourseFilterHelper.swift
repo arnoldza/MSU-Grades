@@ -43,6 +43,40 @@ func filterBySemester(classData: [ClassInfo]) -> [ClassInfo] {
 }
 
 
+// Filter all class data by course
+// This function assumes that inputted array is sorted by semester
+func filterByCourse(classData: [ClassInfo]) -> [ClassInfo] {
+    
+    // Array of filtered courses
+    var filtered = [ClassInfo]()
+    
+    // First course in array
+    let first = classData[0]
+    
+    filtered.append(ClassInfo(term: first.term, subjectCode: "All", courseCode: "Courses", courseTitle: "", instructors: nil, gradeInfo: first.gradeInfo))
+    
+    // Look at each course in full queried class data
+    for (i, course) in classData.enumerated() {
+        
+        // Find index of course
+        if let index = filtered.firstIndex(where: { $0.subjectCode == course.subjectCode && $0.courseCode == course.courseCode }) {
+            let prev = filtered[index]
+            filtered[index] = ClassInfo(term: prev.term, subjectCode: prev.subjectCode, courseCode: prev.courseCode, courseTitle: prev.courseTitle, instructors: nil, gradeInfo: combineGradeInfo(first: prev, second: course))
+
+        } else {
+            filtered.append(ClassInfo(term: course.term, subjectCode: course.subjectCode, courseCode: course.courseCode, courseTitle: course.courseTitle, instructors: nil, gradeInfo: course.gradeInfo))
+        }
+        
+        // Get all semesters
+        if i != 0 {
+            filtered[0] = ClassInfo(term: filtered[0].term, subjectCode: "All", courseCode: "Courses", courseTitle: "", instructors: nil, gradeInfo: combineGradeInfo(first: filtered[0], second: course))
+        }
+    }
+    
+    return filtered
+}
+
+
 
 // Filter all class data by instructor
 // This function assumes that inputted array is sorted by semester
