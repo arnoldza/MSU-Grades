@@ -245,3 +245,18 @@ func instructorComma(original: String) -> String {
     
     return instructorComma
 }
+
+
+// Takes regular instructor name formatting and converts into tertiary DB formatting
+func instructorCommaAlternate(original: String) -> String {
+    
+    let instructorComponents = original.components(separatedBy: " ")
+    var instructorComma = ""
+    for i in 1...instructorComponents.count - 1 {
+        instructorComma += instructorComponents[i] + " "
+    }
+    instructorComma = String(instructorComma.dropLast())
+    instructorComma += "," + instructorComponents[0]
+    
+    return instructorComma
+}

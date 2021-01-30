@@ -21,6 +21,9 @@ class CombinedViewController: UIViewController, UITableViewDelegate, UITableView
     
     @IBOutlet weak var combinedTitleLabel: UILabel!
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var classOverviewButton: UIButton!
+    @IBOutlet weak var instructorOverviewButton: UIButton!
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,7 +33,49 @@ class CombinedViewController: UIViewController, UITableViewDelegate, UITableView
         
         self.tableView.backgroundColor = view.backgroundColor
         
-        combinedTitleLabel.text = self.courseName + " / " + self.instructorName + " - Overview"
+        
+        // Height from top of screen to bottom of navigation bar
+        let navigationBarHeight = self.navigationController?.navigationBar.frame.maxY
+        
+        // Height from bottom of navigation bar to bottom of screen
+        let screenHeight = view.frame.size.height - navigationBarHeight!
+        
+        // Height form bottom of navigation bar to top of table
+        let labelSpace = screenHeight / 4
+        
+        // Space to cushion labels from eachother / screen edges
+        let labelCushion = view.frame.size.width / 30
+        
+        self.tableView.frame = CGRect(x: 0, y: navigationBarHeight! + screenHeight / 4, width: view.frame.size.width, height: screenHeight * 3 / 4)
+        
+        self.classOverviewButton.frame = CGRect(x: labelCushion, y: navigationBarHeight! + labelSpace * 3 / 4, width: view.frame.size.width / 2 - labelCushion, height: labelSpace / 4)
+        
+        self.instructorOverviewButton.frame = CGRect(x: view.frame.size.width / 2, y: navigationBarHeight! + labelSpace * 3 / 4, width: view.frame.size.width / 2 - labelCushion, height: labelSpace / 4)
+        
+        let font = UIFont(name: smallLabelFontName, size: view.frame.size.width * CGFloat(smallLabelFontConstant))
+        
+        self.classOverviewButton.titleLabel?.font = font
+        self.instructorOverviewButton.titleLabel?.font = font
+        
+        
+        self.combinedTitleLabel.frame = CGRect(x: labelCushion, y: navigationBarHeight! + labelCushion, width: view.frame.size.width - labelCushion * 2, height: labelSpace * 3/4 - labelCushion)
+        
+        // Set up course title attributes
+        let attributedString = NSMutableAttributedString(string: self.courseName + " / " + self.instructorName + "\n", attributes: [NSAttributedString.Key.font : UIFont.italicSystemFont(ofSize: self.combinedTitleLabel.frame.height * 1/3)])
+        let boldAttributedString = NSMutableAttributedString(string: " - Overview", attributes: [NSAttributedString.Key.font : UIFont.boldSystemFont(ofSize: self.combinedTitleLabel.frame.height * 1/4)])
+        
+        attributedString.append(boldAttributedString)
+        
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.lineSpacing = 6
+
+        attributedString.addAttribute(NSAttributedString.Key.paragraphStyle, value:paragraphStyle, range:NSMakeRange(0, attributedString.length))
+        
+        self.combinedTitleLabel.adjustsFontSizeToFitWidth = true
+        self.combinedTitleLabel.attributedText = attributedString
+        self.combinedTitleLabel.lineBreakMode = .byTruncatingTail
+        self.combinedTitleLabel.textColor = UIColor.white
+        self.combinedTitleLabel.minimumScaleFactor = 0.5
     }
     
     // Combined view only contains semester cells
@@ -38,11 +83,19 @@ class CombinedViewController: UIViewController, UITableViewDelegate, UITableView
         return self.semesters.count
     }
     
+    
+    // return cell height
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        
+        return view.frame.size.width * 0.3
+    }
+    
+    
     // Return semester cells
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "SemesterCell") as! SemesterCell
         
-        setupSemesterCell(cell: cell, semesters: self.semesters, row: indexPath.row)
+        setupSemesterCell(cell: cell, semesters: self.semesters, row: indexPath.row, cellWidth: view.frame.size.width)
         
         return cell
     }
@@ -109,6 +162,8 @@ class CombinedViewController: UIViewController, UITableViewDelegate, UITableView
         
         var vcArray = self.navigationController?.viewControllers
         vcArray!.removeLast()
+        vcArray!.removeLast()
+        vcArray!.removeLast()
         vcArray!.append(newVc)
         self.navigationController?.setViewControllers(vcArray!, animated: true)
     }
@@ -122,10 +177,13 @@ class CombinedViewController: UIViewController, UITableViewDelegate, UITableView
         let newVc = storyboard.instantiateViewController(withIdentifier: "InstructorViewController") as! InstructorViewController
         
         let instructor = self.instructorName
+        
         let instructorSecondary = instructorComma(original: instructor)
         
+        let instructorTertiary = instructorCommaAlternate(original: instructor)
+        
         // Query for instances of the instructor
-        if let semesters = queryClasses(queryString: "SELECT * FROM courses WHERE instructors LIKE \"%\(instructor)%\" OR instructors LIKE \"%\(instructorSecondary)%\";") {
+        if let semesters = queryClasses(queryString: "SELECT * FROM courses WHERE instructors LIKE \"%\(instructor)%\" OR instructors LIKE \"%\(instructorSecondary)%\" OR instructors LIKE \"%\(instructorTertiary)%\";") {
             
             // filter out semesters and courses from queried data
             let filteredSemesters = filterBySemester(classData: semesters)
@@ -138,6 +196,8 @@ class CombinedViewController: UIViewController, UITableViewDelegate, UITableView
         newVc.instructorName = instructor
         
         var vcArray = self.navigationController?.viewControllers
+        vcArray!.removeLast()
+        vcArray!.removeLast()
         vcArray!.removeLast()
         vcArray!.append(newVc)
         self.navigationController?.setViewControllers(vcArray!, animated: true)

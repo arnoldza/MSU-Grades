@@ -39,6 +39,8 @@ class ChartViewController: UIViewController, ChartViewDelegate {
         self.barChart.delegate = self
         self.pieChart.delegate = self
         
+        // Set labels
+        self.setLabels()
     }
     
     override func viewDidLayoutSubviews() {
@@ -69,6 +71,54 @@ class ChartViewController: UIViewController, ChartViewDelegate {
         view.addSubview(barChart)
         view.addSubview(pieChart)
         
+        // Set chart specs
+        self.setBarChart()
+        self.setPieChart()
+        
+    }
+    
+    
+    func setLabels() {
+        
+        // Height from top of screen to bottom of navigation bar
+        let navigationBarHeight = self.navigationController?.navigationBar.frame.maxY
+        
+        // Height from top of screen to top of chart
+        let spaceAboveChart = view.frame.size.height * 0.578125 - view.frame.size.width * 0.5
+        
+        // Height from bottom of screen to bottom of chart
+        let spaceBelowChart = view.frame.size.height - spaceAboveChart - view.frame.size.width
+        
+        // Height form bottom of navigation bar to top of chart
+        let labelSpace = spaceAboveChart - navigationBarHeight!
+        
+        // Space to cushion labels from eachother / screen edges
+        let labelCushion = view.frame.size.width / 30
+        
+        
+        // Set frames of all labels programmatically
+        self.medianGradeLabel.frame = CGRect(x: labelCushion, y: navigationBarHeight! + labelSpace * 5 / 6, width: view.frame.size.width / 2 - labelCushion, height: labelSpace / 6)
+        
+        self.averageGradeLabel.frame = CGRect(x: labelCushion, y: navigationBarHeight! + labelSpace * 4 / 6, width: view.frame.size.width / 2 - labelCushion, height: labelSpace / 6)
+        
+        self.totalGradesLabel.frame = CGRect(x: view.frame.size.width / 2, y: navigationBarHeight! + labelSpace * 4 / 6, width: view.frame.size.width / 2 - labelCushion, height: labelSpace / 6)
+        
+        self.detailedInfoButton.frame = CGRect(x: view.frame.size.width / 2, y: navigationBarHeight! + labelSpace * 5 / 6, width: view.frame.size.width / 2 - labelCushion, height: labelSpace / 6)
+        
+        self.titleLabel.frame = CGRect(x: labelCushion, y: navigationBarHeight! + labelCushion * 0.5, width: view.frame.size.width - labelCushion * 2, height: labelSpace * 2 / 3 - labelCushion)
+        
+        let font = UIFont(name: smallLabelFontName, size: view.frame.size.width * CGFloat(smallLabelFontConstant))
+        
+        // Set fonts of each label programmatically
+        self.medianGradeLabel.font = font
+        self.averageGradeLabel.font = font
+        self.totalGradesLabel.font = font
+        self.detailedInfoButton.titleLabel?.font = font
+        
+        // Programmatically set frame of chart segmented control
+        self.chartControl.frame = CGRect(x: 0, y: 0, width: view.frame.size.width * 0.8, height: view.frame.size.width * 0.08)
+        self.chartControl.center = CGPoint(x: view.frame.size.width / 2, y: spaceAboveChart + view.frame.size.width + spaceBelowChart * 0.3)
+        
         // Set values of grade data labels
         if self.average >= 0 {
             averageGradeLabel.text = "Average Grade = " + String(format: "%.3f", self.average)
@@ -84,8 +134,8 @@ class ChartViewController: UIViewController, ChartViewDelegate {
         
         
         // Set up chart title attributes
-        let attributedString = NSMutableAttributedString(string: self.chartTitle + "\n", attributes: [NSAttributedString.Key.font : UIFont.italicSystemFont(ofSize: 32)])
-        let boldAttributedString = NSMutableAttributedString(string: self.boldedTitle, attributes: [NSAttributedString.Key.font : UIFont.boldSystemFont(ofSize: 27)])
+        let attributedString = NSMutableAttributedString(string: self.chartTitle + "\n", attributes: [NSAttributedString.Key.font : UIFont.italicSystemFont(ofSize: self.titleLabel.frame.height * 1/3)])
+        let boldAttributedString = NSMutableAttributedString(string: self.boldedTitle, attributes: [NSAttributedString.Key.font : UIFont.boldSystemFont(ofSize: self.titleLabel.frame.height * 1/4)])
 
         attributedString.append(boldAttributedString)
         
@@ -94,18 +144,13 @@ class ChartViewController: UIViewController, ChartViewDelegate {
 
         attributedString.addAttribute(NSAttributedString.Key.paragraphStyle, value:paragraphStyle, range:NSMakeRange(0, attributedString.length))
 
-        self.titleLabel.attributedText = attributedString
         self.titleLabel.adjustsFontSizeToFitWidth = true
+        self.titleLabel.attributedText = attributedString
+        self.titleLabel.lineBreakMode = .byTruncatingTail
         self.titleLabel.textColor = UIColor.white
         self.titleLabel.minimumScaleFactor = 0.5
         
-        
-        // Set chart specs
-        self.setBarChart()
-        self.setPieChart()
-        
     }
-    
     
     func setBarChart() {
         
@@ -243,10 +288,13 @@ class ChartViewController: UIViewController, ChartViewDelegate {
         
         // Get query components
         let instructorSecondary = instructorComma(original: instructor)
+        
+        let instructorTertiary = instructorCommaAlternate(original: instructor)
+        
         let courseComponents = courseName.components(separatedBy: " ")
         
         // Query for instances of both the course and instructor that taught
-        if let semesters = queryClasses(queryString: "SELECT * FROM courses WHERE subject_code == \"\(courseComponents[0])\" AND course_code == \"\(courseComponents[1])\" AND (instructors LIKE \"%\(instructor)%\" OR instructors LIKE \"%\(instructorSecondary)%\");") {
+        if let semesters = queryClasses(queryString: "SELECT * FROM courses WHERE subject_code == \"\(courseComponents[0])\" AND course_code == \"\(courseComponents[1])\" AND (instructors LIKE \"%\(instructor)%\" OR instructors LIKE \"%\(instructorSecondary)%\" OR instructors LIKE \"%\(instructorTertiary)%\");") {
             
             // filter by semester and return
             let filtered = filterBySemester(classData: semesters)
@@ -258,8 +306,6 @@ class ChartViewController: UIViewController, ChartViewDelegate {
         newVc.instructorName = instructor
         
         var vcArray = self.navigationController?.viewControllers
-        vcArray!.removeLast()
-        vcArray!.removeLast()
         vcArray!.append(newVc)
         self.navigationController?.setViewControllers(vcArray!, animated: true)
     }

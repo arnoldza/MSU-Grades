@@ -13,6 +13,8 @@ class HomeViewController: UIViewController, UITextFieldDelegate, ChartViewDelega
 
 
     @IBOutlet weak var classSearchBar: SearchTextField!
+    @IBOutlet weak var appNameLabel: UILabel!
+    
     
     // List of text view suggestions and animated bar chart
     var suggestions = [String]()
@@ -27,30 +29,45 @@ class HomeViewController: UIViewController, UITextFieldDelegate, ChartViewDelega
         // DARK MODEEE
         self.classSearchBar.keyboardAppearance = .dark
         
-        // tap gesture for dismissing keyboard
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(self.dismissKeyboard (_:)))
-        self.view.addGestureRecognizer(tapGesture)
-        
         // navigation item setup
         self.navigationController?.navigationBar.barTintColor = UIColor(red: 0.13, green: 0.36, blue: 0.31, alpha: 1.00)
+        
         // put search bar in navigation item
         self.classSearchBar.frame = CGRect(x: 0, y: 0, width: self.view.frame.width * 0.8, height: 20)
         self.navigationItem.titleView = self.classSearchBar
+
         
-        // Further setup of search bar
+        // Set app name label
+        self.appNameLabel.frame = CGRect(x: 0, y: 0, width: self.view.frame.size.width * 0.875, height: self.view.frame.size.width * 0.4)
+        self.appNameLabel.center = CGPoint(x: view.center.x, y: view.center.y + self.view.frame.size.width * 0.45)
+        self.appNameLabel.adjustsFontSizeToFitWidth = true
+        
         self.setupSearchBar()
+    }
     
+    
+    // Called when 'return' key pressed
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
+    
+    
+    // Called when the user click on the view outside of text field
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        
+        self.classSearchBar.resignFirstResponder()
     }
     
     // To set up bar chart on home page
     override func viewDidLayoutSubviews() {
         
         // Set frames of chart
-        self.barChart.frame = CGRect(x: 0, y: 0, width: self.view.frame.size.width - self.view.frame.size.width / 16, height: self.view.frame.size.width)
+        self.barChart.frame = CGRect(x: 0, y: 0, width: self.view.frame.size.width * 0.9375, height: self.view.frame.size.width)
         
-        // Set centers of chart
-        barChart.center = CGPoint(x: view.center.x, y: view.center.y - view.frame.size.height / 16)
-        
+        // Set center of chart
+        self.barChart.center = CGPoint(x: view.center.x, y: view.center.y - view.frame.size.height * 0.0625)
+
         view.addSubview(barChart)
         
         // Set up initial values for bar chart info
@@ -88,13 +105,17 @@ class HomeViewController: UIViewController, UITextFieldDelegate, ChartViewDelega
     
     
     func setupSearchBar() {
-        
         self.classSearchBar.backgroundColor = UIColor(red: 0.13, green: 0.36, blue: 0.31, alpha: 1.00)
         
-        if let suggestions = querySearchSuggestions(queryCoursesString: "SELECT subject_code, course_code, course_title FROM courses GROUP BY subject_code, course_code;", queryInstructorsString: "SELECT DISTINCT instructors FROM courses;") {
+        // find suggestions
+        if let found = querySearchSuggestions(queryCoursesString: "SELECT subject_code, course_code, course_title FROM courses GROUP BY subject_code, course_code;", queryInstructorsString: "SELECT DISTINCT instructors FROM courses;") {
+            self.suggestions = found
             
-            self.classSearchBar.filterStrings(suggestions)
-            
+            // errorous data
+            if let index = self.suggestions.firstIndex(of: "Saul Beceiro Novo") {
+                self.suggestions.remove(at: index)
+            }
+            self.classSearchBar.filterStrings(self.suggestions)
         }
         
         // DARK MODEEE
@@ -137,6 +158,8 @@ class HomeViewController: UIViewController, UITextFieldDelegate, ChartViewDelega
         self.classSearchBar.itemSelectionHandler = { filteredResults, itemPosition in
             // Just in case you need the item position
             let item = filteredResults[itemPosition]
+            
+            self.classSearchBar.resignFirstResponder()
 
             // Do whatever you want with the picked item
             self.classSearchBar.text = item.title
@@ -151,11 +174,6 @@ class HomeViewController: UIViewController, UITextFieldDelegate, ChartViewDelega
             
             self.classSearchBar.text = ""
         }
-    }
-    
-    // To Dismiss keyboard on tapping outside
-    @objc func dismissKeyboard (_ sender: UITapGestureRecognizer) {
-        self.classSearchBar.resignFirstResponder()
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -181,7 +199,6 @@ class HomeViewController: UIViewController, UITextFieldDelegate, ChartViewDelega
             }
             
             vc.courseName = components[0] + " " + components[1]
-            
         } else if segue.identifier == "instructorSegue" {
             
             // destination is instructor view controller
@@ -191,7 +208,9 @@ class HomeViewController: UIViewController, UITextFieldDelegate, ChartViewDelega
             
             let instructorSecondary = instructorComma(original: instructor)
             
-            if let semesters = queryClasses(queryString: "SELECT * FROM courses WHERE instructors LIKE \"%\(instructor)%\" OR instructors LIKE \"%\(instructorSecondary)%\";") {
+            let instructorTertiary = instructorCommaAlternate(original: instructor)
+            
+            if let semesters = queryClasses(queryString: "SELECT * FROM courses WHERE instructors LIKE \"%\(instructor)%\" OR instructors LIKE \"%\(instructorSecondary)%\" OR instructors LIKE \"%\(instructorTertiary)%\";") {
                 
                 // filter out semesters and courses from queried data
                 let filteredSemesters = filterBySemester(classData: semesters)

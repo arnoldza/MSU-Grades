@@ -8,6 +8,9 @@
 import Foundation
 import UIKit
 
+let smallLabelFontConstant = 0.046
+let smallLabelFontName = "MuktaMahee Light"
+
 
 // Ordering of elements in chart
 let chartOrder = ["4.0", "3.5", "3.0", "2.5", "2.0", "1.5", "1.0", "0.0",

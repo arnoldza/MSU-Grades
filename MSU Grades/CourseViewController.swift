@@ -6,8 +6,9 @@
 //
 
 import UIKit
+import SearchTextField
 
-class CourseViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class CourseViewController: UIViewController, UITableViewDelegate, UITextFieldDelegate, UITableViewDataSource {
     
     // semesters to display in table view
     var semesters = [ClassInfo]()
@@ -23,27 +24,59 @@ class CourseViewController: UIViewController, UITableViewDelegate, UITableViewDa
 
     @IBOutlet weak var breakdownButton: UIButton!
     @IBOutlet weak var courseTitleLabel: UILabel!
-    @IBOutlet weak var courseDescriptionLabel: UILabel!
     @IBOutlet weak var tableView: UITableView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
         self.tableView.delegate = self
         self.tableView.dataSource = self
         
         // Bottom of screen same color as background
         self.tableView.backgroundColor = view.backgroundColor
         
-        self.courseTitleLabel.text = self.courseName + " - Overview"
-        
-        // Get most recent title of course
-        self.courseDescriptionLabel.text = "Course Title: " + self.semesters[0].courseTitle
         
         // Initialize screen to instructor cells
         self.instructorView = true
         self.breakdownButton.setTitle("breakdown by Semester", for: .normal)
         
+        // Height from top of screen to bottom of navigation bar
+        let navigationBarHeight = self.navigationController?.navigationBar.frame.maxY
+        
+        // Height from bottom of navigation bar to bottom of screen
+        let screenHeight = view.frame.size.height - navigationBarHeight!
+        
+        // Height form bottom of navigation bar to top of table
+        let labelSpace = screenHeight / 4
+        
+        // Space to cushion labels from eachother / screen edges
+        let labelCushion = view.frame.size.width / 30
+        
+        self.tableView.frame = CGRect(x: 0, y: navigationBarHeight! + screenHeight / 4, width: view.frame.size.width, height: screenHeight * 3 / 4)
+        
+        self.breakdownButton.frame = CGRect(x: view.frame.size.width / 2, y: navigationBarHeight! + labelSpace * 3 / 4, width: view.frame.size.width / 2 - labelCushion, height: labelSpace / 4)
+        
+        let font = UIFont(name: smallLabelFontName, size: view.frame.size.width * CGFloat(smallLabelFontConstant))
+        
+        self.breakdownButton.titleLabel?.font = font
+        
+        self.courseTitleLabel.frame = CGRect(x: labelCushion, y: navigationBarHeight! + labelCushion, width: view.frame.size.width - labelCushion * 2, height: labelSpace * 3/4 - labelCushion)
+        
+        // Set up course title attributes
+        let attributedString = NSMutableAttributedString(string: self.courseName + " - Overview\n", attributes: [NSAttributedString.Key.font : UIFont.italicSystemFont(ofSize: self.courseTitleLabel.frame.height * 1/3)])
+        let boldAttributedString = NSMutableAttributedString(string: "Course Title: " + self.semesters[0].courseTitle, attributes: [NSAttributedString.Key.font : UIFont.boldSystemFont(ofSize: self.courseTitleLabel.frame.height * 1/4)])
+
+        attributedString.append(boldAttributedString)
+        
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.lineSpacing = 6
+
+        attributedString.addAttribute(NSAttributedString.Key.paragraphStyle, value:paragraphStyle, range:NSMakeRange(0, attributedString.length))
+        
+        self.courseTitleLabel.adjustsFontSizeToFitWidth = true
+        self.courseTitleLabel.attributedText = attributedString
+        self.courseTitleLabel.lineBreakMode = .byTruncatingTail
+        self.courseTitleLabel.textColor = UIColor.white
+        self.courseTitleLabel.minimumScaleFactor = 0.5
     }
     
     
@@ -55,6 +88,12 @@ class CourseViewController: UIViewController, UITableViewDelegate, UITableViewDa
         } else {
             return semesters.count
         }
+    }
+    
+    // return cell height
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        
+        return view.frame.size.width * 0.3
     }
     
     
@@ -70,6 +109,33 @@ class CourseViewController: UIViewController, UITableViewDelegate, UITableViewDa
             } else {
                 cell.backgroundColor = UIColor(white: 0.25, alpha: 1.0)
             }
+            
+            // Space to cushion labels from eachother / screen edges
+            let labelCushion = view.frame.size.width / 20
+            
+            // Height of cell
+            let cellHeight = view.frame.size.width * 0.3
+            
+            // Width of cell
+            let cellWidth = view.frame.size.width
+       
+            cell.instructorNameLabel.frame = CGRect(x: labelCushion, y: 0, width: cellWidth - labelCushion * 2, height: cellHeight / 2)
+            
+            cell.instructorNameLabel.adjustsFontSizeToFitWidth = true
+            
+            cell.averageLabel.frame = CGRect(x: labelCushion, y: cellHeight * 1/2, width: cellWidth / 2 - labelCushion, height: cellHeight / 5)
+            
+            cell.medianLabel.frame = CGRect(x: labelCushion, y: cellHeight * 7/10, width: cellWidth / 2 - labelCushion, height: cellHeight / 5)
+            
+            cell.totalStudentsLabel.frame = CGRect(x: cellWidth / 2, y: cellHeight * 1/2, width: cellWidth / 2 - labelCushion, height: cellHeight / 5)
+            
+            cell.latestDataLabel.frame = CGRect(x: cellWidth / 2, y: cellHeight * 7/10, width: cellWidth / 2 - labelCushion, height: cellHeight / 5)
+            
+            cell.averageLabel.font = cell.averageLabel.font.withSize(cellWidth * CGFloat(dataFontConstant))
+            cell.medianLabel.font = cell.medianLabel.font.withSize(cellWidth * CGFloat(dataFontConstant))
+            cell.totalStudentsLabel.font = cell.totalStudentsLabel.font.withSize(cellWidth * CGFloat(dataFontConstant))
+            cell.latestDataLabel.font = cell.latestDataLabel.font.withSize(cellWidth * CGFloat(dataFontConstant))
+            cell.instructorNameLabel.font = cell.instructorNameLabel.font.withSize(cellWidth * 0.075)
             
             // get data to display on cell
             let instructor = self.instructors[indexPath.row]
@@ -101,7 +167,7 @@ class CourseViewController: UIViewController, UITableViewDelegate, UITableViewDa
             
             let cell = self.tableView.dequeueReusableCell(withIdentifier: "SemesterCell") as! SemesterCell
             
-            setupSemesterCell(cell: cell, semesters: self.semesters, row: indexPath.row)
+            setupSemesterCell(cell: cell, semesters: self.semesters, row: indexPath.row, cellWidth: view.frame.size.width)
             
             return cell
         }
