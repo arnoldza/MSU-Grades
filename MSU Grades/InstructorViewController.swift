@@ -60,19 +60,8 @@ class InstructorViewController: UIViewController, UITableViewDelegate, UITableVi
         
         self.instructorNameLabel.frame = CGRect(x: labelCushion, y: navigationBarHeight! + labelCushion, width: view.frame.size.width - labelCushion * 2, height: labelSpace * 3/4 - labelCushion)
         
-        // Set up course title attributes
-        let attributedString = NSMutableAttributedString(string: self.instructorName + "\n", attributes: [NSAttributedString.Key.font : UIFont.italicSystemFont(ofSize: self.instructorNameLabel.frame.height * 1/3)])
-        let boldAttributedString = NSMutableAttributedString(string: " (Instructor) - Overview", attributes: [NSAttributedString.Key.font : UIFont.boldSystemFont(ofSize: self.instructorNameLabel.frame.height * 1/4)])
-
-        attributedString.append(boldAttributedString)
-        
-        let paragraphStyle = NSMutableParagraphStyle()
-        paragraphStyle.lineSpacing = 6
-
-        attributedString.addAttribute(NSAttributedString.Key.paragraphStyle, value:paragraphStyle, range:NSMakeRange(0, attributedString.length))
-        
         self.instructorNameLabel.adjustsFontSizeToFitWidth = true
-        self.instructorNameLabel.attributedText = attributedString
+        self.instructorNameLabel.attributedText = createAttributedString(italic: self.instructorName + "\n", bold: " (Instructor) - Overview", frameHeight: self.instructorNameLabel.frame.height)
         self.instructorNameLabel.lineBreakMode = .byTruncatingTail
         self.instructorNameLabel.textColor = UIColor.white
         self.instructorNameLabel.minimumScaleFactor = 0.5

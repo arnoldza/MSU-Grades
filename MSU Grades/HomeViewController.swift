@@ -14,6 +14,7 @@ class HomeViewController: UIViewController, UITextFieldDelegate, ChartViewDelega
 
     @IBOutlet weak var classSearchBar: SearchTextField!
     @IBOutlet weak var appNameLabel: UILabel!
+    @IBOutlet weak var aboutButton: UIButton!
     
     
     // List of text view suggestions and animated bar chart
@@ -41,6 +42,12 @@ class HomeViewController: UIViewController, UITextFieldDelegate, ChartViewDelega
         self.appNameLabel.frame = CGRect(x: 0, y: 0, width: self.view.frame.size.width * 0.875, height: self.view.frame.size.width * 0.4)
         self.appNameLabel.center = CGPoint(x: view.center.x, y: view.center.y + self.view.frame.size.width * 0.45)
         self.appNameLabel.adjustsFontSizeToFitWidth = true
+        
+        let font = UIFont(name: smallLabelFontName, size: view.frame.size.width * CGFloat(smallLabelFontConstant))
+        
+        // Set up about page button
+        self.aboutButton.center = CGPoint(x: view.center.x, y: view.frame.size.height * 0.92)
+        self.aboutButton.titleLabel?.font = font
         
         self.setupSearchBar()
     }
@@ -121,7 +128,7 @@ class HomeViewController: UIViewController, UITextFieldDelegate, ChartViewDelega
         // DARK MODEEE
         self.classSearchBar.theme = .darkTheme()
         
-        self.classSearchBar.theme.font = UIFont.systemFont(ofSize: 14)
+        self.classSearchBar.theme.font = UIFont.systemFont(ofSize: view.frame.size.width * CGFloat(smallLabelFontConstant) * 0.8)
         self.classSearchBar.theme.bgColor = UIColor(red: 0.3, green: 0.3, blue: 0.3, alpha: 0.975)
         self.classSearchBar.theme.borderColor = UIColor (red: 0.9, green: 0.9, blue: 0.9, alpha: 0.975)
         self.classSearchBar.theme.separatorColor = UIColor (red: 0.7, green: 0.7, blue: 0.7, alpha: 0.975)
@@ -224,4 +231,7 @@ class HomeViewController: UIViewController, UITextFieldDelegate, ChartViewDelega
         }
     }
 
+    @IBAction func onAboutButton(_ sender: Any) {
+        performSegue(withIdentifier: "aboutPageSegue", sender: nil)
+    }
 }

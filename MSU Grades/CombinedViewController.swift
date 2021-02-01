@@ -60,19 +60,8 @@ class CombinedViewController: UIViewController, UITableViewDelegate, UITableView
         
         self.combinedTitleLabel.frame = CGRect(x: labelCushion, y: navigationBarHeight! + labelCushion, width: view.frame.size.width - labelCushion * 2, height: labelSpace * 3/4 - labelCushion)
         
-        // Set up course title attributes
-        let attributedString = NSMutableAttributedString(string: self.courseName + " / " + self.instructorName + "\n", attributes: [NSAttributedString.Key.font : UIFont.italicSystemFont(ofSize: self.combinedTitleLabel.frame.height * 1/3)])
-        let boldAttributedString = NSMutableAttributedString(string: " - Overview", attributes: [NSAttributedString.Key.font : UIFont.boldSystemFont(ofSize: self.combinedTitleLabel.frame.height * 1/4)])
-        
-        attributedString.append(boldAttributedString)
-        
-        let paragraphStyle = NSMutableParagraphStyle()
-        paragraphStyle.lineSpacing = 6
-
-        attributedString.addAttribute(NSAttributedString.Key.paragraphStyle, value:paragraphStyle, range:NSMakeRange(0, attributedString.length))
-        
         self.combinedTitleLabel.adjustsFontSizeToFitWidth = true
-        self.combinedTitleLabel.attributedText = attributedString
+        self.combinedTitleLabel.attributedText = createAttributedString(italic: self.courseName + " / " + self.instructorName + "\n", bold: " - Overview", frameHeight: self.combinedTitleLabel.frame.height)
         self.combinedTitleLabel.lineBreakMode = .byTruncatingTail
         self.combinedTitleLabel.textColor = UIColor.white
         self.combinedTitleLabel.minimumScaleFactor = 0.5

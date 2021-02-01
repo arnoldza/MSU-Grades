@@ -131,21 +131,9 @@ class ChartViewController: UIViewController, ChartViewDelegate {
             medianGradeLabel.text = ""
         }
         totalGradesLabel.text = String(self.total) + " total students"
-        
-        
-        // Set up chart title attributes
-        let attributedString = NSMutableAttributedString(string: self.chartTitle + "\n", attributes: [NSAttributedString.Key.font : UIFont.italicSystemFont(ofSize: self.titleLabel.frame.height * 1/3)])
-        let boldAttributedString = NSMutableAttributedString(string: self.boldedTitle, attributes: [NSAttributedString.Key.font : UIFont.boldSystemFont(ofSize: self.titleLabel.frame.height * 1/4)])
-
-        attributedString.append(boldAttributedString)
-        
-        let paragraphStyle = NSMutableParagraphStyle()
-        paragraphStyle.lineSpacing = 6
-
-        attributedString.addAttribute(NSAttributedString.Key.paragraphStyle, value:paragraphStyle, range:NSMakeRange(0, attributedString.length))
 
         self.titleLabel.adjustsFontSizeToFitWidth = true
-        self.titleLabel.attributedText = attributedString
+        self.titleLabel.attributedText = createAttributedString(italic: self.chartTitle + "\n", bold: self.boldedTitle, frameHeight: self.titleLabel.frame.height)
         self.titleLabel.lineBreakMode = .byTruncatingTail
         self.titleLabel.textColor = UIColor.white
         self.titleLabel.minimumScaleFactor = 0.5
@@ -248,10 +236,9 @@ class ChartViewController: UIViewController, ChartViewDelegate {
         
         // Data information
         self.pieChart.data = PieChartData(dataSet: chartData)
-        // Formatter for values
-        let formatter = NumberFormatter()
-        formatter.minimumFractionDigits = 0
-        self.pieChart.data?.setValueFormatter(DefaultValueFormatter(formatter:formatter))
+        // Custom formatter for values
+        let formatter2 = CustomValueFormatter(totalValues: Double(self.total))
+        self.pieChart.data?.setValueFormatter(formatter2)
         
         // Other
         self.pieChart.holeColor = self.view.backgroundColor
@@ -313,3 +300,17 @@ class ChartViewController: UIViewController, ChartViewDelegate {
 }
 
 
+// Custom value formatter filters out numbers to prevent number overlapping
+public class CustomValueFormatter: NSObject, IValueFormatter {
+    
+    var total : Double
+
+    init(totalValues: Double) {
+        self.total = totalValues
+    }
+    
+    // If value is less than 3% of the pie chart, don't show value
+    public func stringForValue(_ value: Double, entry: ChartDataEntry, dataSetIndex: Int, viewPortHandler: ViewPortHandler?) -> String {
+        return value / self.total <= 0.03 ? "" : String(format: "%.0f", value)
+    }
+}

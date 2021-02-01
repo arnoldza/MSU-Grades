@@ -61,19 +61,8 @@ class CourseViewController: UIViewController, UITableViewDelegate, UITextFieldDe
         
         self.courseTitleLabel.frame = CGRect(x: labelCushion, y: navigationBarHeight! + labelCushion, width: view.frame.size.width - labelCushion * 2, height: labelSpace * 3/4 - labelCushion)
         
-        // Set up course title attributes
-        let attributedString = NSMutableAttributedString(string: self.courseName + " - Overview\n", attributes: [NSAttributedString.Key.font : UIFont.italicSystemFont(ofSize: self.courseTitleLabel.frame.height * 1/3)])
-        let boldAttributedString = NSMutableAttributedString(string: "Course Title: " + self.semesters[0].courseTitle, attributes: [NSAttributedString.Key.font : UIFont.boldSystemFont(ofSize: self.courseTitleLabel.frame.height * 1/4)])
-
-        attributedString.append(boldAttributedString)
-        
-        let paragraphStyle = NSMutableParagraphStyle()
-        paragraphStyle.lineSpacing = 6
-
-        attributedString.addAttribute(NSAttributedString.Key.paragraphStyle, value:paragraphStyle, range:NSMakeRange(0, attributedString.length))
-        
         self.courseTitleLabel.adjustsFontSizeToFitWidth = true
-        self.courseTitleLabel.attributedText = attributedString
+        self.courseTitleLabel.attributedText = createAttributedString(italic: self.courseName + " - Overview\n", bold: "Course Title: " + self.semesters[0].courseTitle, frameHeight: self.courseTitleLabel.frame.height)
         self.courseTitleLabel.lineBreakMode = .byTruncatingTail
         self.courseTitleLabel.textColor = UIColor.white
         self.courseTitleLabel.minimumScaleFactor = 0.5

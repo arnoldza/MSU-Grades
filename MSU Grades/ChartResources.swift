@@ -55,3 +55,22 @@ let gpaColors = ["4.0" : UIColor(red: 0.39, green: 0.75, blue: 0.48, alpha: 0.90
                  "conditional_pass" : UIColor(red: 0.95, green: 0.65, blue: 0.44, alpha: 0.90),
                  "no_grade_reported" : UIColor(red: 0.50, green: 0.50, blue: 0.50, alpha: 0.90),
                  "blank" : UIColor(red: 0.59, green: 0.59, blue: 0.59, alpha: 0.90)]
+
+
+// Create an attributed string for labels
+// Top is larger italic text, bottom is smaller bold text
+func createAttributedString(italic: String, bold: String, frameHeight: CGFloat) -> NSAttributedString {
+    
+    // Set up course title attributes
+    let attributedString = NSMutableAttributedString(string: italic, attributes: [NSAttributedString.Key.font : UIFont.italicSystemFont(ofSize: frameHeight * 1/3)])
+    let boldAttributedString = NSMutableAttributedString(string: bold, attributes: [NSAttributedString.Key.font : UIFont.boldSystemFont(ofSize: frameHeight * 1/4)])
+
+    attributedString.append(boldAttributedString)
+    
+    let paragraphStyle = NSMutableParagraphStyle()
+    paragraphStyle.lineSpacing = 6
+
+    attributedString.addAttribute(NSAttributedString.Key.paragraphStyle, value:paragraphStyle, range:NSMakeRange(0, attributedString.length))
+    
+    return attributedString
+}

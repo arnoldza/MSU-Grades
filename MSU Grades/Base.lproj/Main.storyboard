@@ -23,6 +23,17 @@
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iXP-4e-o53">
+                                <rect key="frame" x="79" y="776" width="233" height="42"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" name="MuktaMahee-Regular" family="Mukta Mahee" pointSize="18"/>
+                                <state key="normal" title="About Page">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <connections>
+                                    <action selector="onAboutButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="lcP-Aw-wW9"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" red="0.13333332540000001" green="0.13333332540000001" blue="0.13333332540000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
@@ -39,16 +50,46 @@
                         </textField>
                     </navigationItem>
                     <connections>
+                        <outlet property="aboutButton" destination="iXP-4e-o53" id="ItT-2J-8GS"/>
                         <outlet property="appNameLabel" destination="vra-DY-1gw" id="dJm-Sr-h2k"/>
                         <outlet property="classSearchBar" destination="N3T-YB-QAN" id="8k6-72-r4k"/>
                         <outlet property="navigationItem" destination="bA7-10-EWc" id="dAN-0V-cdk"/>
                         <segue destination="qOg-k4-xdr" kind="show" identifier="courseSegue" id="eEO-Ze-sR0"/>
                         <segue destination="U19-Gh-Liu" kind="show" identifier="instructorSegue" id="vlD-Dv-5Ht"/>
+                        <segue destination="qh8-pT-Ukj" kind="presentation" identifier="aboutPageSegue" id="ym5-lj-5NL"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="927.69230769230762" y="79.620853080568722"/>
+        </scene>
+        <!--About View Controller-->
+        <scene sceneID="tGF-EZ-Rj8">
+            <objects>
+                <viewController id="qh8-pT-Ukj" customClass="AboutViewController" customModule="MSU_Grades" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Ekq-wl-iKc">
+                        <rect key="frame" x="0.0" y="0.0" width="390" height="790"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="I9g-zQ-DQH">
+                                <rect key="frame" x="16" y="66" width="358" height="102"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <string key="text">Michigan State University and MSU are trademarks of Michigan State University. This website is not affiliated with or endorsed by Michigan State University. </string>
+                                <fontDescription key="fontDescription" name="MuktaMahee-Regular" family="Mukta Mahee" pointSize="21"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="PtW-HE-IKu"/>
+                        <color key="backgroundColor" red="0.13333332540000001" green="0.13333332540000001" blue="0.13333332540000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                    </view>
+                    <connections>
+                        <outlet property="infoLabel" destination="I9g-zQ-DQH" id="35g-vI-kEd"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Cd4-h2-zwI" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="928" y="842"/>
         </scene>
         <!--Course View Controller-->
         <scene sceneID="ARg-xX-JNn">
@@ -573,7 +614,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="lga-Sv-rHY"/>
+        <segue reference="1iC-Gu-sBH"/>
     </inferredMetricsTieBreakers>
     <resources>
         <systemColor name="systemBackgroundColor">

@@ -15,6 +15,7 @@
 		E859359625AA7EBE003E49C6 /* InstructorCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E859359525AA7EBE003E49C6 /* InstructorCell.swift */; };
 		E85935A125ABBC3A003E49C6 /* courses.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = E859359D25ABBBDF003E49C6 /* courses.sqlite */; };
 		E85935A625ABDF3C003E49C6 /* ChartResources.swift in Sources */ = {isa = PBXBuildFile; fileRef = E85935A525ABDF3B003E49C6 /* ChartResources.swift */; };
+		E865D68925C7A465006FA9D0 /* AboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E865D68825C7A465006FA9D0 /* AboutViewController.swift */; };
 		E8808B1025AFA6EB00D35A48 /* CourseCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8808B0F25AFA6EB00D35A48 /* CourseCell.swift */; };
 		E8BDE441259A94420025A1AE /* InstructorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8BDE440259A94420025A1AE /* InstructorViewController.swift */; };
 		E8BDE446259A944C0025A1AE /* CombinedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8BDE445259A944C0025A1AE /* CombinedViewController.swift */; };
@@ -66,6 +67,7 @@
 		E859359525AA7EBE003E49C6 /* InstructorCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstructorCell.swift; sourceTree = "<group>"; };
 		E859359D25ABBBDF003E49C6 /* courses.sqlite */ = {isa = PBXFileReference; lastKnownFileType = file; path = courses.sqlite; sourceTree = "<group>"; };
 		E85935A525ABDF3B003E49C6 /* ChartResources.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartResources.swift; sourceTree = "<group>"; };
+		E865D68825C7A465006FA9D0 /* AboutViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutViewController.swift; sourceTree = "<group>"; };
 		E8808B0F25AFA6EB00D35A48 /* CourseCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseCell.swift; sourceTree = "<group>"; };
 		E8BDE440259A94420025A1AE /* InstructorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstructorViewController.swift; sourceTree = "<group>"; };
 		E8BDE445259A944C0025A1AE /* CombinedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CombinedViewController.swift; sourceTree = "<group>"; };
@@ -188,6 +190,7 @@
 				E859359525AA7EBE003E49C6 /* InstructorCell.swift */,
 				E85935A525ABDF3B003E49C6 /* ChartResources.swift */,
 				E8808B0F25AFA6EB00D35A48 /* CourseCell.swift */,
+				E865D68825C7A465006FA9D0 /* AboutViewController.swift */,
 			);
 			path = "MSU Grades";
 			sourceTree = "<group>";
@@ -458,6 +461,7 @@
 				E8D697802591957A00415B66 /* SceneDelegate.swift in Sources */,
 				E8D697B12591A52600415B66 /* HomeViewController.swift in Sources */,
 				E85935A625ABDF3C003E49C6 /* ChartResources.swift in Sources */,
+				E865D68925C7A465006FA9D0 /* AboutViewController.swift in Sources */,
 				E8D697CF25986A3B00415B66 /* CourseViewController.swift in Sources */,
 				E8D697B62591C7A400415B66 /* ChartViewController.swift in Sources */,
 				E8D697E2259902FD00415B66 /* ClassInfo.swift in Sources */,
@@ -651,7 +655,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.arnoldza.MSU-Grades";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -671,7 +675,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.arnoldza.MSU-Grades";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
