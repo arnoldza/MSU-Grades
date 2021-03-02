@@ -16,9 +16,9 @@ let smallLabelFontName = "MuktaMahee Light"
 let chartOrder = ["4.0", "3.5", "3.0", "2.5", "2.0", "1.5", "1.0", "0.0",
                     "A+", "A", "A-", "B+", "B", "B-", "C+", "C", "C-", "D+",
                     "D", "D-", "F",
-                    "incomplete", "withdrawn", "pass", "no_grade", "deferred",
-                    "unfinished_work", "visitor", "auditor", "extension",
-                    "conditional_pass", "no_grade_reported", "blank"]
+                    "Incomplete", "Withdrawn", "Pass", "Fail", "Deferred",
+                    "Unfinished Work", "Visitor", "Auditor", "Extension",
+                    "Conditional Pass", "No Grade Reported", "Blank"]
 
 // Map of colors of each chart segment
 // White color implies no current entries
@@ -43,18 +43,18 @@ let gpaColors = ["4.0" : UIColor(red: 0.39, green: 0.75, blue: 0.48, alpha: 0.90
                  "D" : UIColor(red: 0.88, green: 0.63, blue: 0.44, alpha: 0.90),
                  "D-" : UIColor.white,
                  "F" : UIColor(red: 0.90, green: 0.45, blue: 0.44, alpha: 0.90),
-                 "incomplete" : UIColor(red: 0.53, green: 0.33, blue: 0.55, alpha: 0.90),
-                 "withdrawn" : UIColor(red: 0.92, green: 0.22, blue: 0.17, alpha: 0.90),
-                 "pass" : UIColor(red: 0.48, green: 0.74, blue: 0.51, alpha: 0.90),
-                 "no_grade" : UIColor(red: 0.90, green: 0.45, blue: 0.44, alpha: 0.90),
-                 "deferred" : UIColor(red: 0.96, green: 0.71, blue: 0.45, alpha: 0.90),
-                 "unfinished_work" : UIColor(red: 0.52, green: 0.10, blue: 0.55, alpha: 0.90),
-                 "visitor" : UIColor(red: 0.03, green: 0.04, blue: 0.55, alpha: 0.90),
-                 "auditor" : UIColor(red: 0.25, green: 0.27, blue: 0.60, alpha: 0.90),
-                 "extension" : UIColor(red: 0.93, green: 0.41, blue: 0.17, alpha: 0.90),
-                 "conditional_pass" : UIColor(red: 0.95, green: 0.65, blue: 0.44, alpha: 0.90),
-                 "no_grade_reported" : UIColor(red: 0.50, green: 0.50, blue: 0.50, alpha: 0.90),
-                 "blank" : UIColor(red: 0.59, green: 0.59, blue: 0.59, alpha: 0.90)]
+                 "Incomplete" : UIColor(red: 0.53, green: 0.33, blue: 0.55, alpha: 0.90),
+                 "Withdrawn" : UIColor(red: 0.92, green: 0.22, blue: 0.17, alpha: 0.90),
+                 "Pass" : UIColor(red: 0.48, green: 0.74, blue: 0.51, alpha: 0.90),
+                 "Fail" : UIColor(red: 0.90, green: 0.45, blue: 0.44, alpha: 0.90),
+                 "Deferred" : UIColor(red: 0.96, green: 0.71, blue: 0.45, alpha: 0.90),
+                 "Unfinished Work" : UIColor(red: 0.52, green: 0.10, blue: 0.55, alpha: 0.90),
+                 "Visitor" : UIColor(red: 0.03, green: 0.04, blue: 0.55, alpha: 0.90),
+                 "Auditor" : UIColor(red: 0.25, green: 0.27, blue: 0.60, alpha: 0.90),
+                 "Extension" : UIColor(red: 0.93, green: 0.41, blue: 0.17, alpha: 0.90),
+                 "Conditional Pass" : UIColor(red: 0.95, green: 0.65, blue: 0.44, alpha: 0.90),
+                 "No Grade Reported" : UIColor(red: 0.50, green: 0.50, blue: 0.50, alpha: 0.90),
+                 "Blank" : UIColor(red: 0.59, green: 0.59, blue: 0.59, alpha: 0.90)]
 
 
 // Create an attributed string for labels

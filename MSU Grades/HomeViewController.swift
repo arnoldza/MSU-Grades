@@ -32,6 +32,7 @@ class HomeViewController: UIViewController, UITextFieldDelegate, ChartViewDelega
         
         // navigation item setup
         self.navigationController?.navigationBar.barTintColor = UIColor(red: 0.13, green: 0.36, blue: 0.31, alpha: 1.00)
+        self.navigationController?.navigationBar.tintColor = UIColor.white
         
         // put search bar in navigation item
         self.classSearchBar.frame = CGRect(x: 0, y: 0, width: self.view.frame.width * 0.8, height: 20)
@@ -43,11 +44,17 @@ class HomeViewController: UIViewController, UITextFieldDelegate, ChartViewDelega
         self.appNameLabel.center = CGPoint(x: view.center.x, y: view.center.y + self.view.frame.size.width * 0.45)
         self.appNameLabel.adjustsFontSizeToFitWidth = true
         
-        let font = UIFont(name: smallLabelFontName, size: view.frame.size.width * CGFloat(smallLabelFontConstant))
+        // Status bar & Navigation bar heights ***CORRECT***
+        let statusBarHeight =  navigationController?.view.window?.windowScene?.statusBarManager?.statusBarFrame.height ?? 0
+        let navigationBarHeight = navigationController?.navigationBar.frame.height ?? 0
+        
+        // Height from bottom of navigation bar to bottom of screen
+        let screenHeight = view.frame.size.height - navigationBarHeight - statusBarHeight
         
         // Set up about page button
-        self.aboutButton.center = CGPoint(x: view.center.x, y: view.frame.size.height * 0.92)
-        self.aboutButton.titleLabel?.font = font
+        self.aboutButton.center = CGPoint(x: screenHeight * 0.05, y: navigationBarHeight + statusBarHeight + screenHeight * 0.05)
+        self.aboutButton.tintColor = UIColor.white
+        self.aboutButton.imageView?.layer.transform = CATransform3DMakeScale(1.2, 1.2, 1.2)
         
         self.setupSearchBar()
     }
@@ -184,6 +191,11 @@ class HomeViewController: UIViewController, UITextFieldDelegate, ChartViewDelega
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        // Changes 'Back' to 'Home' in navigation item
+        let backItem = UIBarButtonItem()
+        backItem.title = "Home"
+        navigationItem.backBarButtonItem = backItem
         
         // if segue is to course page
         if segue.identifier == "courseSegue" {

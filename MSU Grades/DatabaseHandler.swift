@@ -13,12 +13,12 @@ let termCodeMap = ["SS": "Spring", "US": "Summer", "FS": "Fall"]
 
 // Ordering of elements in database columns
 let gradeOrder = ["4.0", "3.5", "3.0", "2.5", "2.0", "1.5", "1.0", "0.0",
-                    "incomplete", "withdrawn", "pass", "no_grade", "deferred",
-                    "unfinished_work", "visitor",
+                    "Incomplete", "Withdrawn", "Pass", "Fail", "Deferred",
+                    "Unfinished Work", "Visitor",
                     "A+", "A", "A-", "B+", "B", "B-", "C+", "C", "C-", "D+",
                     "D", "D-", "F",
-                    "auditor", "extension",
-                    "conditional_pass", "no_grade_reported", "blank"]
+                    "Auditor", "Extension",
+                    "Conditional Pass", "No Grade Reported", "Blank"]
 
 
 // Opens database

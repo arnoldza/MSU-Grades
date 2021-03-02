@@ -116,7 +116,7 @@ class ChartViewController: UIViewController, ChartViewDelegate {
         self.detailedInfoButton.titleLabel?.font = font
         
         // Programmatically set frame of chart segmented control
-        self.chartControl.frame = CGRect(x: 0, y: 0, width: view.frame.size.width * 0.8, height: view.frame.size.width * 0.08)
+        self.chartControl.frame = CGRect(x: 0, y: 0, width: view.frame.size.width * 0.8, height: view.frame.size.width * 0.1)
         self.chartControl.center = CGPoint(x: view.frame.size.width / 2, y: spaceAboveChart + view.frame.size.width + spaceBelowChart * 0.3)
         
         // Set values of grade data labels
