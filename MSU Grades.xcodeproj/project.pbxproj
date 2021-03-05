@@ -21,7 +21,6 @@
 		E8BDE446259A944C0025A1AE /* CombinedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8BDE445259A944C0025A1AE /* CombinedViewController.swift */; };
 		E8D6977E2591957A00415B66 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8D6977D2591957A00415B66 /* AppDelegate.swift */; };
 		E8D697802591957A00415B66 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8D6977F2591957A00415B66 /* SceneDelegate.swift */; };
-		E8D697822591957A00415B66 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8D697812591957A00415B66 /* ViewController.swift */; };
 		E8D697852591957A00415B66 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E8D697832591957A00415B66 /* Main.storyboard */; };
 		E8D697872591957F00415B66 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E8D697862591957F00415B66 /* Assets.xcassets */; };
 		E8D6978A2591957F00415B66 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E8D697882591957F00415B66 /* LaunchScreen.storyboard */; };
@@ -74,7 +73,6 @@
 		E8D6977A2591957A00415B66 /* MSU Grades.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "MSU Grades.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E8D6977D2591957A00415B66 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E8D6977F2591957A00415B66 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		E8D697812591957A00415B66 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		E8D697842591957A00415B66 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		E8D697862591957F00415B66 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E8D697892591957F00415B66 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -171,7 +169,6 @@
 			children = (
 				E8D6977D2591957A00415B66 /* AppDelegate.swift */,
 				E8D6977F2591957A00415B66 /* SceneDelegate.swift */,
-				E8D697812591957A00415B66 /* ViewController.swift */,
 				E8D697832591957A00415B66 /* Main.storyboard */,
 				E8D697862591957F00415B66 /* Assets.xcassets */,
 				E8D697882591957F00415B66 /* LaunchScreen.storyboard */,
@@ -453,7 +450,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				E859358C25A1DE18003E49C6 /* CalculationHandler.swift in Sources */,
-				E8D697822591957A00415B66 /* ViewController.swift in Sources */,
 				E8D6977E2591957A00415B66 /* AppDelegate.swift in Sources */,
 				E8D697D425986D6A00415B66 /* SemesterCell.swift in Sources */,
 				E859359125AA71BF003E49C6 /* CourseFilterHelper.swift in Sources */,
